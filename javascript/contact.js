@@ -75,8 +75,10 @@ function ContactMap() {
     this.start = function () {
         $('button.grab-thumbnail').click(this.getGoogleImage);
         $('button.save-thumbnail').click(this.saveImage);
+        $('button.clear-thumbnail').click(this.clearImage);
         if (thumbnail_map.length > 0) {
             $('button.save-thumbnail').hide();
+            $('button.clear-thumbnail').show();
         }
     };
 
@@ -92,6 +94,18 @@ function ContactMap() {
                 });
     };
 
+    this.clearImage = function () {
+        $.getJSON('contact/admin/map/clearThumbnail', {})
+                .done(function (data) {
+                    $('.map-image').html('');
+                    $('button.clear-thumbnail').hide();
+                    $this.clearSuccessMessage();
+                })
+                .fail(function () {
+                    alert('Failed to clear Google thumbnail');
+                });
+    };
+
     this.saveImage = function () {
         $.getJSON('contact/admin/map/saveThumbnail',
                 {
@@ -101,6 +115,8 @@ function ContactMap() {
             if (data.result === undefined) {
                 alert('Failed to save Google thumbnail');
             } else {
+                $('button.clear-thumbnail').show();
+                $('button.save-thumbnail').hide();
                 $this.imageSuccessMessage();
             }
         }).fail(function () {
@@ -113,6 +129,14 @@ function ContactMap() {
             <button type = "button" class = "close" data-dismiss="alert" aria-label="Close">\
             <span aria-hidden="true">&times;</span></button>\
             Map image saved.</div>');
+    };
+
+    this.clearSuccessMessage = function () {
+        $('.alert').remove();
+        $('.map-section').prepend('<div class="alert alert-success alert-dismissible" role="alert">\
+            <button type = "button" class = "close" data-dismiss="alert" aria-label="Close">\
+            <span aria-hidden="true">&times;</span></button>\
+            Map image removed.</div>');
     };
 
     this.imageFailureMessage = function () {

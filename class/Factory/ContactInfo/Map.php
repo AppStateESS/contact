@@ -95,4 +95,13 @@ class Map
         self::save($map);
     }
 
+    public static function clearThumbnail()
+    {
+        $map_directory = \Settings::get('contact', 'thumbnail_map');
+        if (is_file($map_directory)) {
+            unlink($map_directory);
+        }
+        \Settings::set('contact', 'thumbnail_map', null);
+    }
+
 }

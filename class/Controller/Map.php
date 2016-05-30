@@ -41,6 +41,13 @@ class Map extends \phpws2\Http\Controller
             case 'saveThumbnail':
                 return $this->saveThumbnail($request);
                 break;
+
+            case 'clearThumbnail':
+                Factory::clearThumbnail();
+                $json['success'] = 1;
+                $response = new \View\JsonView($json);
+                return $response;
+                break;
         }
     }
 
