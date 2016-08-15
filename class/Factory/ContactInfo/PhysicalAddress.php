@@ -28,7 +28,7 @@ class PhysicalAddress
     {
         $physical_address->setBuilding($values['building']);
         $physical_address->setRoomNumber(empty($values['room_number']) ? null : $values['room_number']);
-        $physical_address->setPostBox($values['post_box']);
+        $physical_address->setPostBox((int)$values['post_box']);
         $physical_address->setStreet($values['street']);
         $physical_address->setCity($values['city']);
         $physical_address->setState($values['state']);
