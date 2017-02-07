@@ -11,7 +11,7 @@ namespace contact;
  * @author Matthew McNaney <mcnaney at gmail dot com>
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
-class Module extends \Module implements \SettingDefaults
+class Module extends \Canopy\Module implements \Canopy\SettingDefaults
 {
 
     public function __construct()

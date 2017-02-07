@@ -16,7 +16,7 @@ class ContactInfo extends \Http\Controller
     {
         $data = array();
         $view = $this->getView($data, $request);
-        $response = new \Response($view);
+        $response = new \Canopy\Response($view);
         return $response;
     }
 
