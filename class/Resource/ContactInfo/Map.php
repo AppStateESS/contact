@@ -17,11 +17,11 @@ class Map extends \Canopy\Data{
 
     public function __construct()
     {
-        $this->thumbnail_map = new \phpws2\Variable\File(null, 'thumbnail_map');
+        $this->thumbnail_map = new \phpws2\Variable\FileVar(null, 'thumbnail_map');
         $this->thumbnail_map->allowNull(true);
         $this->thumbnail_map->allowEmpty(true);
-        $this->latitude = new \phpws2\Variable\Float(null, 'latitude');
-        $this->longitude = new \phpws2\Variable\Float(null, 'longitude');
+        $this->latitude = new \phpws2\Variable\FloatVar(null, 'latitude');
+        $this->longitude = new \phpws2\Variable\FloatVar(null, 'longitude');
         $this->full_map_link = new \phpws2\Variable\Url(null, 'full_map_link');
         $this->full_map_link->allowNull(true);
         $this->zoom = new \phpws2\Variable\IntegerVar(null, 'zoom');
