@@ -12,7 +12,7 @@ use contact\Resource;
 class ContactInfo extends \Http\Controller
 {
 
-    public function get(\Request $request)
+    public function get(\Canopy\Request $request)
     {
         $data = array();
         $view = $this->getView($data, $request);
@@ -20,19 +20,19 @@ class ContactInfo extends \Http\Controller
         return $response;
     }
 
-    protected function getHtmlView($data, \Request $request)
+    protected function getHtmlView($data, \Canopy\Request $request)
     {
         $content = Factory::form($request, 'contact_info');
         $view = new \View\HtmlView(\PHPWS_ControlPanel::display($content));
         return $view;
     }
 
-    public function post(\Request $request)
+    public function post(\Canopy\Request $request)
     {
         return $this->postContactInfo($request);
     }
 
-    private function postContactInfo(\Request $request)
+    private function postContactInfo(\Canopy\Request $request)
     {
         $values = $request->getVars();
         Factory::post(Factory::load(), $values['vars']);

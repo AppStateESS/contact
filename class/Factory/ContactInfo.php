@@ -12,7 +12,7 @@ use contact\Factory;
 class ContactInfo
 {
 
-    public static function form(\Request $request, $active_tab)
+    public static function form(\Canopy\Request $request, $active_tab)
     {
         javascript('jquery');
         javascript('ckeditor');

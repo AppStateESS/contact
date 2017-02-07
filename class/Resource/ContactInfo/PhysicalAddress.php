@@ -11,58 +11,58 @@ class PhysicalAddress extends \Data
 
     /**
      * Room nummber in building
-     * @var \Variable\Integer
+     * @var \phpws2\Variable\Integer
      */
     private $room_number;
 
     /**
      * Name of building
-     * @var \Variable\TextOnly
+     * @var \phpws2\Variable\TextOnly
      */
     private $building;
 
     /**
      *
-     * @var \Variable\TextOnly
+     * @var \phpws2\Variable\TextOnly
      */
     private $street;
 
     /**
      * Post Office box
-     * @var \Variable\Integer
+     * @var \phpws2\Variable\Integer
      */
     private $post_box;
 
     /**
-     * @var \Variable\TextOnly
+     * @var \phpws2\Variable\TextOnly
      */
     private $city;
 
     /**
-     * @var \Variable\TextOnly
+     * @var \phpws2\Variable\TextOnly
      */
     private $state;
 
     /**
-     * @var \Variable\Integer
+     * @var \phpws2\Variable\Integer
      */
     private $zip;
 
     public function __construct()
     {
-        $this->room_number = new \Variable\Integer(null, 'room_number');
+        $this->room_number = new \phpws2\Variable\Integer(null, 'room_number');
         $this->room_number->allowNull(true);
-        $this->building = new \Variable\TextOnly(null, 'building');
+        $this->building = new \phpws2\Variable\TextOnly(null, 'building');
         $this->building->allowNull(true);
-        $this->street = new \Variable\TextOnly(null, 'street');
+        $this->street = new \phpws2\Variable\TextOnly(null, 'street');
         $this->street->allowNull(true);
-        $this->post_box = new \Variable\Integer(null, 'post_box');
+        $this->post_box = new \phpws2\Variable\Integer(null, 'post_box');
         $this->post_box->allowNull(true);
-        $this->city = new \Variable\TextOnly(null, 'city');
+        $this->city = new \phpws2\Variable\TextOnly(null, 'city');
         $this->city->allowNull(true);
-        $this->state = new \Variable\TextOnly(null, 'state');
+        $this->state = new \phpws2\Variable\TextOnly(null, 'state');
         $this->state->allowNull(true);
-        $this->zip = new \Variable\String(null, 'zip');
+        $this->zip = new \phpws2\Variable\StringType(null, 'zip');
         $this->zip->allowNull(true);
     }
 

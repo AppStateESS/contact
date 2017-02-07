@@ -13,12 +13,12 @@ class ContactInfo extends \Resource
     private $physical_address;
 
     /**
-     * @var \phpws2\Variable\String
+     * @var \phpws2\Variable\StringType
      */
     private $phone_number;
 
     /**
-     * @var \phpws2\Variable\String
+     * @var \phpws2\Variable\StringType
      */
     private $fax_number;
 
@@ -38,25 +38,25 @@ class ContactInfo extends \Resource
     private $email;
 
     /**
-     * @var \phpws2\Variable\String
+     * @var \phpws2\Variable\StringType
      */
     private $site_contact_name;
 
     /**
-     * @var \phpws2\Variable\String
+     * @var \phpws2\Variable\StringType
      */
     private $site_contact_email;
 
     /**
-     * @var \phpws2\Variable\String
+     * @var \phpws2\Variable\StringType
      */
     private $other_information;
 
     public function __construct()
     {
         $this->physical_address = new ContactInfo\PhysicalAddress;
-        $this->phone_number = new \phpws2\Variable\String(null, 'phone_number');
-        $this->fax_number = new \phpws2\Variable\String(null, 'phone_number');
+        $this->phone_number = new \phpws2\Variable\StringType(null, 'phone_number');
+        $this->fax_number = new \phpws2\Variable\StringType(null, 'phone_number');
         $this->fax_number->allowEmpty(true);
         $this->social = new ContactInfo\Social;
         $this->map = new ContactInfo\Map;
@@ -66,7 +66,7 @@ class ContactInfo extends \Resource
         $this->site_contact_name->allowNull(true);
         $this->site_contact_email = new \phpws2\Variable\TextOnly(null, 'site_contact_email');
         $this->site_contact_email->allowNull(true);
-        $this->other_information = new \phpws2\Variable\String(null, 'other_information');
+        $this->other_information = new \phpws2\Variable\StringType(null, 'other_information');
         $this->other_information->allowNull(true);
     }
 

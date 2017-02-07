@@ -32,7 +32,7 @@ use contact\Resource;
 class User extends \phpws2\Http\Controller
 {
 
-    public function get(\Request $request)
+    public function get(\Canopy\Request $request)
     {
         $data = array();
         $view = $this->getView($data, $request);
@@ -40,7 +40,7 @@ class User extends \phpws2\Http\Controller
         return $response;
     }
 
-    protected function getHtmlView($data, \Request $request)
+    protected function getHtmlView($data, \Canopy\Request $request)
     {
         $content = Factory::display();
         if (empty($content)) {

@@ -15,20 +15,20 @@ class Link extends \Data
     private $icon = null;
 
     /**
-     * @var \Variable\TextOnly
+     * @var \phpws2\Variable\TextOnly
      */
     private $title;
 
     /**
-     * @var \Variable\Url
+     * @var \phpws2\Variable\Url
      */
     private $url;
 
     public function __construct()
     {
-        $this->title = new \Variable\TextOnly(null, 'title');
-        $this->icon = new \Variable\TextOnly(null, 'icon');
-        $this->url = new \Variable\Url(null, 'url');
+        $this->title = new \phpws2\Variable\TextOnly(null, 'title');
+        $this->icon = new \phpws2\Variable\TextOnly(null, 'icon');
+        $this->url = new \phpws2\Variable\Url(null, 'url');
     }
 
     public function setIcon($icon)

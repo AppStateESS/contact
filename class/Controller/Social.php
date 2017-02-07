@@ -9,7 +9,7 @@ namespace contact\Controller;
 class Social extends \Http\Controller
 {
 
-    public function get(\Request $request)
+    public function get(\Canopy\Request $request)
     {
         $data = array();
         $view = $this->getView($data, $request);
@@ -17,14 +17,14 @@ class Social extends \Http\Controller
         return $response;
     }
 
-    protected function getHtmlView($data, \Request $request)
+    protected function getHtmlView($data, \Canopy\Request $request)
     {
         $content = \contact\Factory\ContactInfo::form($request, 'social');
         $view = new \View\HtmlView(\PHPWS_ControlPanel::display($content));
         return $view;
     }
 
-    public function post(\Request $request)
+    public function post(\Canopy\Request $request)
     {
         $social_links = \contact\Factory\ContactInfo\Social::pullSavedLinks();
         $label = $request->getVar('label');

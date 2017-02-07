@@ -21,7 +21,7 @@ class Module extends \Module implements \SettingDefaults
         $this->setProperName('Contact');
     }
 
-    public function getController(\Request $request)
+    public function getController(\Canopy\Request $request)
     {
         $cmd = $request->shiftCommand();
         if ($cmd == 'admin') {
@@ -51,7 +51,7 @@ class Module extends \Module implements \SettingDefaults
         }
     }
 
-    public function runTime(\Request $request)
+    public function runTime(\Canopy\Request $request)
     {
         Factory\ContactInfo::showSiteContact();
         $request = \Server::getCurrentRequest();

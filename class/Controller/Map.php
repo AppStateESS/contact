@@ -11,7 +11,7 @@ use contact\Factory\ContactInfo\Map as Factory;
 class Map extends \phpws2\Http\Controller
 {
 
-    public function get(\Request $request)
+    public function get(\Canopy\Request $request)
     {
         $data = array();
         $view = $this->getView($data, $request);
@@ -19,14 +19,14 @@ class Map extends \phpws2\Http\Controller
         return $response;
     }
 
-    protected function getHtmlView($data, \Request $request)
+    protected function getHtmlView($data, \Canopy\Request $request)
     {
         $content = \contact\Factory\ContactInfo::form($request, 'map');
         $view = new \View\HtmlView(\PHPWS_ControlPanel::display($content));
         return $view;
     }
 
-    protected function getJsonView($data, \Request $request)
+    protected function getJsonView($data, \Canopy\Request $request)
     {
         $command = $request->shiftCommand();
         switch ($command) {
@@ -51,7 +51,7 @@ class Map extends \phpws2\Http\Controller
         }
     }
 
-    private function getGoogleLink(\Request $request)
+    private function getGoogleLink(\Canopy\Request $request)
     {
         $latitude = $request->getVar('latitude');
         $longitude = $request->getVar('longitude');
@@ -76,7 +76,7 @@ class Map extends \phpws2\Http\Controller
         return $response;
     }
 
-    private function saveThumbnail(\Request $request)
+    private function saveThumbnail(\Canopy\Request $request)
     {
         $latitude = $request->getVar('latitude');
         $longitude = $request->getVar('longitude');

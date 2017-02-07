@@ -18,16 +18,16 @@ class Map extends \Data
 
     public function __construct()
     {
-        $this->thumbnail_map = new \Variable\File(null, 'thumbnail_map');
+        $this->thumbnail_map = new \phpws2\Variable\File(null, 'thumbnail_map');
         $this->thumbnail_map->allowNull(true);
         $this->thumbnail_map->allowEmpty(true);
-        $this->latitude = new \Variable\Float(null, 'latitude');
-        $this->longitude = new \Variable\Float(null, 'longitude');
-        $this->full_map_link = new \Variable\Url(null, 'full_map_link');
+        $this->latitude = new \phpws2\Variable\Float(null, 'latitude');
+        $this->longitude = new \phpws2\Variable\Float(null, 'longitude');
+        $this->full_map_link = new \phpws2\Variable\Url(null, 'full_map_link');
         $this->full_map_link->allowNull(true);
-        $this->zoom = new \Variable\Integer(null, 'zoom');
-        $this->dimension_x = new \Variable\Integer(null, 'dimension_x');
-        $this->dimension_y = new \Variable\Integer(null, 'dimension_y');
+        $this->zoom = new \phpws2\Variable\Integer(null, 'zoom');
+        $this->dimension_x = new \phpws2\Variable\Integer(null, 'dimension_x');
+        $this->dimension_y = new \phpws2\Variable\Integer(null, 'dimension_y');
     }
 
     public function setThumbnailMap($thumbnail_map)
