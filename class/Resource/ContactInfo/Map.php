@@ -6,8 +6,7 @@ namespace contact\Resource\ContactInfo;
  * @license http://opensource.org/licenses/lgpl-3.0.html
  * @author Matthew McNaney <mcnaney at gmail dot com>
  */
-class Map extends \Data
-{
+class Map extends \Canopy\Data{
     private $thumbnail_map;
     private $latitude;
     private $longitude;

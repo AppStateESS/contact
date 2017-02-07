@@ -7,8 +7,7 @@ use contact\Resource\ContactInfo\Social\Link;
  * @license http://opensource.org/licenses/lgpl-3.0.html
  * @author Matthew McNaney <mcnaney at gmail dot com>
  */
-class Social extends \Data
-{
+class Social extends \Canopy\Data{
     /**
      * Array of offsite links in use
      * @var array
