@@ -54,7 +54,7 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
     public function runTime(\Canopy\Request $request)
     {
         Factory\ContactInfo::showSiteContact();
-        $request = \Server::getCurrentRequest();
+        $request = \Canopy\Server::getCurrentRequest();
         $module = $request->getModule();
         if ($module !== 'contact') {
             $content = Factory\ContactInfo::display();
