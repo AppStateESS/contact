@@ -24,9 +24,9 @@ class Map extends \Canopy\Data{
         $this->longitude = new \phpws2\Variable\Float(null, 'longitude');
         $this->full_map_link = new \phpws2\Variable\Url(null, 'full_map_link');
         $this->full_map_link->allowNull(true);
-        $this->zoom = new \phpws2\Variable\Integer(null, 'zoom');
-        $this->dimension_x = new \phpws2\Variable\Integer(null, 'dimension_x');
-        $this->dimension_y = new \phpws2\Variable\Integer(null, 'dimension_y');
+        $this->zoom = new \phpws2\Variable\IntegerVar(null, 'zoom');
+        $this->dimension_x = new \phpws2\Variable\IntegerVar(null, 'dimension_x');
+        $this->dimension_y = new \phpws2\Variable\IntegerVar(null, 'dimension_y');
     }
 
     public function setThumbnailMap($thumbnail_map)

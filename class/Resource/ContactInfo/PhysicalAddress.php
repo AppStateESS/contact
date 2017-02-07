@@ -49,19 +49,19 @@ class PhysicalAddress extends \Canopy\Data{
 
     public function __construct()
     {
-        $this->room_number = new \phpws2\Variable\Integer(null, 'room_number');
+        $this->room_number = new \phpws2\Variable\IntegerVar(null, 'room_number');
         $this->room_number->allowNull(true);
         $this->building = new \phpws2\Variable\TextOnly(null, 'building');
         $this->building->allowNull(true);
         $this->street = new \phpws2\Variable\TextOnly(null, 'street');
         $this->street->allowNull(true);
-        $this->post_box = new \phpws2\Variable\Integer(null, 'post_box');
+        $this->post_box = new \phpws2\Variable\IntegerVar(null, 'post_box');
         $this->post_box->allowNull(true);
         $this->city = new \phpws2\Variable\TextOnly(null, 'city');
         $this->city->allowNull(true);
         $this->state = new \phpws2\Variable\TextOnly(null, 'state');
         $this->state->allowNull(true);
-        $this->zip = new \phpws2\Variable\StringType(null, 'zip');
+        $this->zip = new \phpws2\Variable\StringVar(null, 'zip');
         $this->zip->allowNull(true);
     }
 
