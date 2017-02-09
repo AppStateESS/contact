@@ -37,7 +37,7 @@ class ContactInfo extends \Http\Controller
         $values = $request->getVars();
         Factory::post(Factory::load(), $values['vars']);
         $_SESSION['Contact_Message'] = 'Settings saved';
-        $response = new \Http\SeeOtherResponse(\Server::getCurrentUrl(false));
+        $response = new \Http\SeeOtherResponse(\Canopy\Server::getCurrentUrl(false));
         return $response;
     }
 
