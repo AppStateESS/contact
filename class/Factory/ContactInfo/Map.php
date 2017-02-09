@@ -27,8 +27,8 @@ class Map
     public static function getImageUrl($latitude, $longitude)
     {
         $map = self::load();
-        $size = \Settings::get('contact', 'dimension_x') . 'x' . \Settings::get('contact', 'dimension_y');
-        $zoom = \Settings::get('contact', 'zoom');
+        $size = \phpws2\Settings::get('contact', 'dimension_x') . 'x' . \phpws2\Settings::get('contact', 'dimension_y');
+        $zoom = \phpws2\Settings::get('contact', 'zoom');
         return "https://maps.googleapis.com/maps/api/staticmap?center=$latitude,$longitude&size=$size&maptype=roadmap&zoom=$zoom&markers=color:red%7Clabel:A%7C$latitude,$longitude";
     }
 
@@ -55,13 +55,13 @@ class Map
     {
         $map = new \contact\Resource\ContactInfo\Map;
 
-        $map->setThumbnailMap(\Settings::get('contact', 'thumbnail_map'));
-        $map->setLatitude(\Settings::get('contact', 'latitude'));
-        $map->setLongitude(\Settings::get('contact', 'longitude'));
-        $map->setFullMapLink(\Settings::get('contact', 'full_map_link'));
-        $map->setZoom(\Settings::get('contact', 'zoom'));
-        $map->setDimensionX(\Settings::get('contact', 'dimension_x'));
-        $map->setDimensionY(\Settings::get('contact', 'dimension_y'));
+        $map->setThumbnailMap(\phpws2\Settings::get('contact', 'thumbnail_map'));
+        $map->setLatitude(\phpws2\Settings::get('contact', 'latitude'));
+        $map->setLongitude(\phpws2\Settings::get('contact', 'longitude'));
+        $map->setFullMapLink(\phpws2\Settings::get('contact', 'full_map_link'));
+        $map->setZoom(\phpws2\Settings::get('contact', 'zoom'));
+        $map->setDimensionX(\phpws2\Settings::get('contact', 'dimension_x'));
+        $map->setDimensionY(\phpws2\Settings::get('contact', 'dimension_y'));
         return $map;
     }
 
@@ -69,7 +69,7 @@ class Map
     {
         $values = self::getValues($map);
         foreach ($values as $key => $val) {
-            \Settings::set('contact', $key, $val);
+            \phpws2\Settings::set('contact', $key, $val);
         }
     }
 
@@ -97,11 +97,11 @@ class Map
 
     public static function clearThumbnail()
     {
-        $map_directory = \Settings::get('contact', 'thumbnail_map');
+        $map_directory = \phpws2\Settings::get('contact', 'thumbnail_map');
         if (is_file($map_directory)) {
             unlink($map_directory);
         }
-        \Settings::set('contact', 'thumbnail_map', null);
+        \phpws2\Settings::set('contact', 'thumbnail_map', null);
     }
 
 }

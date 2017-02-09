@@ -66,7 +66,7 @@ class Social
      */
     public static function pullSavedLinks()
     {
-        $link_array = \Settings::get('contact', 'social');
+        $link_array = \phpws2\Settings::get('contact', 'social');
         if (!empty($link_array)) {
             return unserialize($link_array);
         }
@@ -76,7 +76,7 @@ class Social
     public static function saveLinks(array $links)
     {
         $serial_links = serialize($links);
-        \Settings::set('contact', 'social', $serial_links);
+        \phpws2\Settings::set('contact', 'social', $serial_links);
     }
 
     public static function getLinksAsJavascriptObject(array $links)

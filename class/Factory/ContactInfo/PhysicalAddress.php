@@ -14,13 +14,13 @@ class PhysicalAddress
     public static function load()
     {
         $physical_address = new \contact\Resource\ContactInfo\PhysicalAddress;
-        $physical_address->setRoomNumber(\Settings::get('contact', 'room_number'));
-        $physical_address->setBuilding(\Settings::get('contact', 'building'));
-        $physical_address->setStreet(\Settings::get('contact', 'street'));
-        $physical_address->setPostBox(\Settings::get('contact', 'post_box'));
-        $physical_address->setCity(\Settings::get('contact', 'city'));
-        $physical_address->setState(\Settings::get('contact', 'state'));
-        $physical_address->setZip(\Settings::get('contact', 'zip'));
+        $physical_address->setRoomNumber(\phpws2\Settings::get('contact', 'room_number'));
+        $physical_address->setBuilding(\phpws2\Settings::get('contact', 'building'));
+        $physical_address->setStreet(\phpws2\Settings::get('contact', 'street'));
+        $physical_address->setPostBox(\phpws2\Settings::get('contact', 'post_box'));
+        $physical_address->setCity(\phpws2\Settings::get('contact', 'city'));
+        $physical_address->setState(\phpws2\Settings::get('contact', 'state'));
+        $physical_address->setZip(\phpws2\Settings::get('contact', 'zip'));
         return $physical_address;
     }
 
@@ -37,13 +37,13 @@ class PhysicalAddress
 
     public static function save(PhysicalAddressResource $physical_address)
     {
-        \Settings::set('contact', 'building', $physical_address->getBuilding());
-        \Settings::set('contact', 'room_number', $physical_address->getRoomNumber());
-        \Settings::set('contact', 'post_box', $physical_address->getPostBox());
-        \Settings::set('contact', 'street', $physical_address->getStreet());
-        \Settings::set('contact', 'city', $physical_address->getCity());
-        \Settings::set('contact', 'state', $physical_address->getState());
-        \Settings::set('contact', 'zip', $physical_address->getZip());
+        \phpws2\Settings::set('contact', 'building', $physical_address->getBuilding());
+        \phpws2\Settings::set('contact', 'room_number', $physical_address->getRoomNumber());
+        \phpws2\Settings::set('contact', 'post_box', $physical_address->getPostBox());
+        \phpws2\Settings::set('contact', 'street', $physical_address->getStreet());
+        \phpws2\Settings::set('contact', 'city', $physical_address->getCity());
+        \phpws2\Settings::set('contact', 'state', $physical_address->getState());
+        \phpws2\Settings::set('contact', 'zip', $physical_address->getZip());
     }
 
     public static function getValues(PhysicalAddressResource $physical_address)

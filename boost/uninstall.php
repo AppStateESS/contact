@@ -7,6 +7,6 @@
 
 function contact_uninstall(&$content) {
     $content[] = 'Settings cleared.';
-    \Settings::reset('contact');
+    \phpws2\Settings::reset('contact');
     return true;
 }

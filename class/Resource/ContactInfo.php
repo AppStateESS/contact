@@ -4,7 +4,7 @@ namespace contact\Resource;
 
 use contact\Resource\ContactInfo;
 
-class ContactInfo extends \Resource
+class ContactInfo extends \phpws2\Resource
 {
 
     /**

@@ -22,7 +22,7 @@ class ContactInfo
             $active_tab = 'contact-info';
         }
 
-        $thumbnail_map = \Settings::get('contact', 'thumbnail_map');
+        $thumbnail_map = \phpws2\Settings::get('contact', 'thumbnail_map');
 
         $contact_info = self::load();
         $values = self::getValues($contact_info);
@@ -48,7 +48,7 @@ EOF;
         $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/contact.js';
         \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>");
         \Layout::addJSHeader('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>');
-        $template = new \Template($values);
+        $template = new \phpws2\Template($values);
         $template->setModuleTemplate('contact', 'Contact_Info_Form.html');
         return $template->get();
     }
@@ -56,12 +56,12 @@ EOF;
     public static function load()
     {
         $contact_info = new \contact\Resource\ContactInfo;
-        $contact_info->setPhoneNumber(\Settings::get('contact', 'phone_number'));
-        $contact_info->setFaxNumber(\Settings::get('contact', 'fax_number'));
-        $contact_info->setEmail(\Settings::get('contact', 'email'));
-        $contact_info->setSiteContactName(\Settings::get('contact', 'site_contact_name'));
-        $contact_info->setSiteContactEmail(\Settings::get('contact', 'site_contact_email'));
-        $contact_info->setOtherInformation(\Settings::get('contact', 'other_information'));
+        $contact_info->setPhoneNumber(\phpws2\Settings::get('contact', 'phone_number'));
+        $contact_info->setFaxNumber(\phpws2\Settings::get('contact', 'fax_number'));
+        $contact_info->setEmail(\phpws2\Settings::get('contact', 'email'));
+        $contact_info->setSiteContactName(\phpws2\Settings::get('contact', 'site_contact_name'));
+        $contact_info->setSiteContactEmail(\phpws2\Settings::get('contact', 'site_contact_email'));
+        $contact_info->setOtherInformation(\phpws2\Settings::get('contact', 'other_information'));
 
         $contact_info->setPhysicalAddress(ContactInfo\PhysicalAddress::load());
         $contact_info->setMap(Factory\ContactInfo\Map::load());
@@ -122,12 +122,12 @@ EOF;
 
     private static function save(\contact\Resource\ContactInfo $contact_info)
     {
-        \Settings::set('contact', 'phone_number', $contact_info->getPhoneNumber());
-        \Settings::set('contact', 'fax_number', $contact_info->getFaxNumber());
-        \Settings::set('contact', 'email', $contact_info->getEmail());
-        \Settings::set('contact', 'site_contact_name', $contact_info->getSiteContactName());
-        \Settings::set('contact', 'site_contact_email', $contact_info->getSiteContactEmail());
-        \Settings::set('contact', 'other_information', $contact_info->getOtherInformation());
+        \phpws2\Settings::set('contact', 'phone_number', $contact_info->getPhoneNumber());
+        \phpws2\Settings::set('contact', 'fax_number', $contact_info->getFaxNumber());
+        \phpws2\Settings::set('contact', 'email', $contact_info->getEmail());
+        \phpws2\Settings::set('contact', 'site_contact_name', $contact_info->getSiteContactName());
+        \phpws2\Settings::set('contact', 'site_contact_email', $contact_info->getSiteContactEmail());
+        \phpws2\Settings::set('contact', 'other_information', $contact_info->getOtherInformation());
     }
 
     public static function showSiteContact()
@@ -150,7 +150,7 @@ EOF;
 
     public static function display()
     {
-        $building = \Settings::get('contact', 'building');
+        $building = \phpws2\Settings::get('contact', 'building');
 
         if (empty($building)) {
             return;
@@ -159,7 +159,7 @@ EOF;
         $contact_info = self::load();
         $values = self::getValues($contact_info, true);
 
-        $template = new \Template($values);
+        $template = new \phpws2\Template($values);
         $template->setModuleTemplate('contact', 'view.html');
         $content = $template->get();
         return $content;
