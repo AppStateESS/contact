@@ -6,7 +6,7 @@ namespace contact\Controller;
  * @license http://opensource.org/licenses/lgpl-3.0.html
  * @author Matthew McNaney <mcnaney at gmail dot com>
  */
-class Social extends \Http\Controller
+class Social extends \phpws2\Http\Controller
 {
 
     public function get(\Canopy\Request $request)
@@ -20,7 +20,7 @@ class Social extends \Http\Controller
     protected function getHtmlView($data, \Canopy\Request $request)
     {
         $content = \contact\Factory\ContactInfo::form($request, 'social');
-        $view = new \View\HtmlView(\PHPWS_ControlPanel::display($content));
+        $view = new \phpws2\View\HtmlView(\PHPWS_ControlPanel::display($content));
         return $view;
     }
 

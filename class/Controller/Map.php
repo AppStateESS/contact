@@ -22,7 +22,7 @@ class Map extends \phpws2\Http\Controller
     protected function getHtmlView($data, \Canopy\Request $request)
     {
         $content = \contact\Factory\ContactInfo::form($request, 'map');
-        $view = new \View\HtmlView(\PHPWS_ControlPanel::display($content));
+        $view = new \phpws2\View\HtmlView(\PHPWS_ControlPanel::display($content));
         return $view;
     }
 
@@ -45,7 +45,7 @@ class Map extends \phpws2\Http\Controller
             case 'clearThumbnail':
                 Factory::clearThumbnail();
                 $json['success'] = 1;
-                $response = new \View\JsonView($json);
+                $response = new \phpws2\View\JsonView($json);
                 return $response;
                 break;
         }
@@ -56,7 +56,7 @@ class Map extends \phpws2\Http\Controller
         $latitude = $request->getVar('latitude');
         $longitude = $request->getVar('longitude');
         $json['url'] = Factory::getImageUrl($latitude, $longitude);
-        $response = new \View\JsonView($json);
+        $response = new \phpws2\View\JsonView($json);
         return $response;
     }
 
@@ -72,7 +72,7 @@ class Map extends \phpws2\Http\Controller
             $json['error'] = $e->getMessage();
         }
 
-        $response = new \View\JsonView($json);
+        $response = new \phpws2\View\JsonView($json);
         return $response;
     }
 
@@ -84,7 +84,7 @@ class Map extends \phpws2\Http\Controller
         Factory::createMapThumbnail($latitude, $longitude);
 
         $json['result'] = 'true';
-        $response = new \View\JsonView($json);
+        $response = new \phpws2\View\JsonView($json);
         return $response;
     }
 

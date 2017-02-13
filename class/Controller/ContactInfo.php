@@ -9,7 +9,7 @@ use contact\Resource;
  * @license http://opensource.org/licenses/lgpl-3.0.html
  * @author Matthew McNaney <mcnaney at gmail dot com>
  */
-class ContactInfo extends \Http\Controller
+class ContactInfo extends \phpws2\Http\Controller
 {
 
     public function get(\Canopy\Request $request)
@@ -23,7 +23,7 @@ class ContactInfo extends \Http\Controller
     protected function getHtmlView($data, \Canopy\Request $request)
     {
         $content = Factory::form($request, 'contact_info');
-        $view = new \View\HtmlView(\PHPWS_ControlPanel::display($content));
+        $view = new \phpws2\View\HtmlView(\PHPWS_ControlPanel::display($content));
         return $view;
     }
 

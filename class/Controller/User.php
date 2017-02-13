@@ -46,7 +46,7 @@ class User extends \phpws2\Http\Controller
         if (empty($content)) {
             $content = 'No contact information found';
         }
-        $view = new \View\HtmlView($content);
+        $view = new \phpws2\View\HtmlView($content);
         return $view;
     }
 
