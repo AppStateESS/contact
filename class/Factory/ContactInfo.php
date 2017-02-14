@@ -16,7 +16,7 @@ class ContactInfo
     {
         javascript('jquery');
         javascript('ckeditor');
-        \Form::requiredScript();
+        \phpws2\Form::requiredScript();
 
         if (!in_array($active_tab, array('contact-info', 'map', 'social'))) {
             $active_tab = 'contact-info';
