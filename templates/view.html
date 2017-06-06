@@ -33,5 +33,7 @@
     <?php echo $other_information ?>
 </div>
 <div class="contact-map">
+<?php if (!empty($thumbnail_map)): ?>
     <a href='<?php echo $full_map_link?>' target='_blank'><img src='<?php echo $thumbnail_map?>' class='img-responsive' /></a>
+<?php endif; ?>
 </div>
