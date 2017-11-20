@@ -51,6 +51,8 @@ class ContactInfo extends \phpws2\Resource
      * @var \phpws2\Variable\StringVar
      */
     private $other_information;
+    
+    private $front_only;
 
     public function __construct()
     {
@@ -68,6 +70,7 @@ class ContactInfo extends \phpws2\Resource
         $this->site_contact_email->allowNull(true);
         $this->other_information = new \phpws2\Variable\StringVar(null, 'other_information');
         $this->other_information->allowNull(true);
+        $this->front_only = new \phpws2\Variable\BooleanVar(0, 'front_only');
     }
 
     /**
@@ -181,6 +184,16 @@ class ContactInfo extends \phpws2\Resource
     public function getOtherInformation()
     {
         return $this->other_information->get();
+    }
+    
+    public function setFrontOnly($fo)
+    {
+        $this->front_only->set($fo);
+    }
+    
+    public function getFrontOnly()
+    {
+        return $this->front_only->get();
     }
 
 }

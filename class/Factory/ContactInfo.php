@@ -62,6 +62,7 @@ EOF;
         $contact_info->setSiteContactName(\phpws2\Settings::get('contact', 'site_contact_name'));
         $contact_info->setSiteContactEmail(\phpws2\Settings::get('contact', 'site_contact_email'));
         $contact_info->setOtherInformation(\phpws2\Settings::get('contact', 'other_information'));
+        $contact_info->setFrontOnly(\phpws2\Settings::get('contact', 'front_only'));
 
         $contact_info->setPhysicalAddress(ContactInfo\PhysicalAddress::load());
         $contact_info->setMap(Factory\ContactInfo\Map::load());
@@ -79,6 +80,7 @@ EOF;
             $values['formatted_fax_number'] = $contact_info->getFaxNumber(true);
         }
 
+        $values['front_only'] = $contact_info->getFrontOnly();
         $values['site_contact_name'] = $contact_info->getSiteContactName();
         $values['site_contact_email'] = $contact_info->getSiteContactEmail();
         $values['other_information'] = $contact_info->getOtherInformation();
@@ -113,6 +115,7 @@ EOF;
         $contact_info->setSiteContactName($values['site_contact_name']);
         $contact_info->setSiteContactEmail($values['site_contact_email']);
         $contact_info->setOtherInformation($values['other_information']);
+        $contact_info->setFrontOnly(isset($values['front_only']));
         self::save($contact_info);
 
         $physical_address = $contact_info->getPhysicalAddress();
@@ -128,6 +131,7 @@ EOF;
         \phpws2\Settings::set('contact', 'site_contact_name', $contact_info->getSiteContactName());
         \phpws2\Settings::set('contact', 'site_contact_email', $contact_info->getSiteContactEmail());
         \phpws2\Settings::set('contact', 'other_information', $contact_info->getOtherInformation());
+        \phpws2\Settings::set('contact', 'front_only', $contact_info->getFrontOnly());
     }
 
     public static function showSiteContact()

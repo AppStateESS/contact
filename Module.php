@@ -53,6 +53,10 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
 
     public function runTime(\Canopy\Request $request)
     {
+        $frontOnly = \phpws2\Settings::get('contact', 'front_only');
+        if ($frontOnly && !\phpws\PHPWS_Core::atHome()) {
+            return;
+        }
         Factory\ContactInfo::showSiteContact();
         $request = \Canopy\Server::getCurrentRequest();
         $module = $request->getModule();
@@ -95,6 +99,8 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
         $settings['zoom'] = 17;
         $settings['dimension_x'] = '300';
         $settings['dimension_y'] = '300';
+        
+        $settings['front_only'] = false;
 
         return $settings;
     }
