@@ -16,6 +16,14 @@ function contact_update(&$content, $currentVersion)
 + Fixed Mozilla map bug.
 </pre>
 EOF;
+        case version_compare($currentVersion, '1.2.0', '<'):
+            $content[] = <<<EOF
+<pre>
+1.2.0
+-----------
++ Updated Font Awesome icons
+</pre>
+EOF;
 
             return true;
     }
