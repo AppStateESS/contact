@@ -147,6 +147,8 @@ EOF;
         if (empty($name) || empty($email)) {
             return;
         }
+        \Layout::plug($sc_name, 'CONTACT_NAME');
+        \Layout::plug($sc_email, 'CONTACT_EMAIL');
         $content = "Please report problems with this site or content errors to <a href='mailto:$email'>$name <i class='far fa-envelope'></i></a>.";
         \Layout::add($content, 'contact', 'SITE_CONTACT');
     }
