@@ -14,7 +14,6 @@ class ContactInfo
 
     public static function form(\Canopy\Request $request, $active_tab)
     {
-        javascript('jquery');
         javascript('ckeditor');
         \phpws2\Form::requiredScript();
 
@@ -148,7 +147,7 @@ EOF;
         if (empty($name) || empty($email)) {
             return;
         }
-        $content = "Please report problems with this site or content errors to <a href='mailto:$email'>$name <i class='fa fa-envelope-o'></i></a>.";
+        $content = "Please report problems with this site or content errors to <a href='mailto:$email'>$name <i class='far fa-envelope'></i></a>.";
         \Layout::add($content, 'contact', 'SITE_CONTACT');
     }
 
