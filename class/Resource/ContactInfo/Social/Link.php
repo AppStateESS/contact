@@ -42,7 +42,7 @@ class Link extends \Canopy\Data{
     
     public function getFAIcon()
     {
-        return '<i class="fa fa-' . $this->getIcon() . ' fa-stack-2x"></i>';
+        return '<i class="' . $this->getIcon() . '"></i>';
     }
     
     public function setTitle($title)

@@ -233,7 +233,7 @@ function ContactSocial() {
     };
 
     this.populateForm = function () {
-        $('#social-icon').html('<i class="fa fa-5x fa-' + this.current_icon + '"></i>');
+        $('#social-icon').html('<i class="' + this.current_icon + ' fa-5x"></i>');
         $('#social-url').val(this.current_url);
         $('#social-prefix').html(this.current_prefix);
     };
