@@ -2,7 +2,7 @@ var contact_tab = new ContactTab;
 var contact_map = new ContactMap;
 var contact_social = new ContactSocial;
 var contact_form = new ContactForm;
-$(window).load(function () {
+$(document).ready(function () {
     CKEDITOR.replace('other-information');
     contact_tab.start();
     contact_map.start();
