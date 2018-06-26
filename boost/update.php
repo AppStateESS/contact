@@ -24,6 +24,15 @@ EOF;
 + Updated Font Awesome icons
 </pre>
 EOF;
+        case version_compare($currentVersion, '1.2.1', '<'):
+            $content[] = <<<EOF
+<pre>
+1.2.1
+-----------
++ Updated Bootstrap layout
++ Disabled Google map interface.
+</pre>
+EOF;
 
             return true;
     }

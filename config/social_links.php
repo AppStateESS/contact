@@ -8,7 +8,7 @@ $social_links['email']['icon'] = 'far fa-envelope';
 $social_links['email']['prefix'] = 'mailto:';
 
 $social_links['facebook']['title'] = 'Facebook';
-$social_links['facebook']['icon'] = 'fab fa-facebook-square';
+$social_links['facebook']['icon'] = 'fab fa-facebook';
 $social_links['facebook']['prefix'] = 'http://';
 
 $social_links['flickr']['title'] = 'Flickr';
@@ -16,7 +16,7 @@ $social_links['flickr']['icon'] = 'fab fa-flickr';
 $social_links['flickr']['prefix'] = 'http://';
 
 $social_links['googleplus']['title'] = 'Google Plus';
-$social_links['googleplus']['icon'] = 'fab fa-google-plus-square';
+$social_links['googleplus']['icon'] = 'fab fa-google-plus';
 $social_links['googleplus']['prefix'] = 'http://';
 
 $social_links['instagram']['title'] = 'Instagram';
@@ -24,7 +24,7 @@ $social_links['instagram']['icon'] = 'fab fa-instagram';
 $social_links['instagram']['prefix'] = 'http://';
 
 $social_links['linkedin']['title'] = 'LinkedIn';
-$social_links['linkedin']['icon'] = 'fab fa-linkedin-square';
+$social_links['linkedin']['icon'] = 'fab fa-linkedin';
 $social_links['linkedin']['prefix'] = 'http://';
 
 $social_links['medium']['title'] = 'Medium';
@@ -36,7 +36,7 @@ $social_links['phone']['icon'] = 'fas fa-phone';
 $social_links['phone']['prefix'] = 'tel:+1';
 
 $social_links['pinterest']['title'] = 'Pinterest';
-$social_links['pinterest']['icon'] = 'fab fa-pinterest-square';
+$social_links['pinterest']['icon'] = 'fab fa-pinterest';
 $social_links['pinterest']['prefix'] = 'http://';
 
 $social_links['twitter']['title'] = 'Twitter';
@@ -48,5 +48,5 @@ $social_links['wordpress']['icon'] = 'fab fa-wordpress';
 $social_links['wordpress']['prefix'] = 'http://';
 
 $social_links['youtube']['title'] = 'YouTube';
-$social_links['youtube']['icon'] = 'fab fa-youtube-square';
+$social_links['youtube']['icon'] = 'fab fa-youtube';
 $social_links['youtube']['prefix'] = 'http://';

@@ -44,9 +44,9 @@ EOF;
         }
 
         \Layout::addJSHeader($js_string);
-        $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/contact.js';
+        $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/contact.min.js';
         \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>");
-        \Layout::addJSHeader('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>');
+        //\Layout::addJSHeader('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>');
         $template = new \phpws2\Template($values);
         $template->setModuleTemplate('contact', 'Contact_Info_Form.html');
         return $template->get();
@@ -64,7 +64,7 @@ EOF;
         $contact_info->setFrontOnly(\phpws2\Settings::get('contact', 'front_only'));
 
         $contact_info->setPhysicalAddress(ContactInfo\PhysicalAddress::load());
-        $contact_info->setMap(Factory\ContactInfo\Map::load());
+        //$contact_info->setMap(Factory\ContactInfo\Map::load());
         $contact_info->setSocial(Factory\ContactInfo\Social::load());
         return $contact_info;
     }
@@ -88,7 +88,7 @@ EOF;
         $map = $contact_info->getMap();
 
         $values = array_merge($values, ContactInfo\PhysicalAddress::getValues($physical_address));
-        $values = array_merge($values, ContactInfo\Map::getValues($map));
+        //$values = array_merge($values, ContactInfo\Map::getValues($map));
 
         if ($sort_social) {
             $social = ContactInfo\Social::getLinks();
