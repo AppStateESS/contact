@@ -33,6 +33,14 @@ EOF;
 + Disabled Google map interface.
 </pre>
 EOF;
+        case version_compare($currentVersion, '1.2.2', '<'):
+            $content[] = <<<EOF
+<pre>
+1.2.2
+-----------
++ Removed layout classes.
+</pre>
+EOF;
 
             return true;
     }
