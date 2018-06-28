@@ -1,31 +1,25 @@
-<div class="contact-block mb-lg-2 mt-3 mt-lg-0">
+<div class="contact-block">
   <h3>Contact Us</h3>
-  <div class="row">
-    <div class="col-md-6 col-lg-12">
-      <div class="contact-address">
-        <?php if ($room_number || $building): ?>
-        <div>
-          <?=(!empty($room_number)) ? "Rm. $room_number, " : null?>
-            <?=(!empty($building)) ? $building : null?>
-        </div>
-        <?php endif;?>
-        <?=(!empty($post_box)) ? "<div>P.O. Box $post_box</div>" : null?>
-          <?=(!empty($street)) ? "<div>$street</div>" : null?>
-            <?=(!empty($city) && !empty($state) && !empty($zip)) ? "<div>$city, $state $zip</div>":null?>
-      </div>
+  <div class="contact-address">
+    <?php if ($room_number || $building): ?>
+    <div>
+      <?=(!empty($room_number)) ? "Rm. $room_number, " : null?>
+      <?=(!empty($building)) ? $building : null?>
     </div>
-    <div class="col-md-6 col-lg-12">
-      <div class="contact-social-icons">
-        <?php if (!empty($social)): foreach($social as $label=>$link): extract($link);?>
-          <a href="<?=$prefix,$url?>"><i class="fa-2x <?=$icon?>" title="<?=$title?>"></i></a>
-        <?php endforeach;endif;?>
-      </div>
-      <div class="contact-digital">
-        <?=(!empty($phone_number)) ? "<div><strong>Phone:</strong> <a href=\"tel:+1{$phone_number}\">$formatted_phone_number</a></div>":null?>
-          <?=(!empty($formatted_fax_number))? "<div><strong>Fax:</strong> $formatted_fax_number</div>" : null?>
-            <?=(!empty($email)) ? "<div><strong>Email:</strong> <a href=\"mailto:<?php echo $email?>\">$email</a></div>" : null?>
-      </div>
-    </div>
+    <?php endif;?>
+    <?=(!empty($post_box)) ? "<div>P.O. Box $post_box</div>" : null?>
+    <?=(!empty($street)) ? "<div>$street</div>" : null?>
+    <?=(!empty($city) && !empty($state) && !empty($zip)) ? "<div>$city, $state $zip</div>":null?>
+  </div>
+  <div class="contact-social-icons">
+    <?php if (!empty($social)): foreach($social as $label=>$link): extract($link);?>
+    <a href="<?=$prefix,$url?>"><i class="fa-2x <?=$icon?>" title="<?=$title?>"></i></a>
+    <?php endforeach;endif;?>
+  </div>
+  <div class="contact-digital">
+    <?=(!empty($phone_number)) ? "<div><strong>Phone:</strong> <a href=\"tel:+1{$phone_number}\">$formatted_phone_number</a></div>":null?>
+    <?=(!empty($formatted_fax_number))? "<div><strong>Fax:</strong> $formatted_fax_number</div>" : null?>
+    <?=(!empty($email)) ? "<div><strong>Email:</strong> <a href=\"mailto:<?php echo $email?>\">$email</a></div>" : null?>
   </div>
   <hr />
   <div class="contact-other-information">
