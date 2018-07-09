@@ -7,6 +7,10 @@ $social_links['email']['title'] = 'Email';
 $social_links['email']['icon'] = 'far fa-envelope';
 $social_links['email']['prefix'] = 'mailto:';
 
+$social_links['phone']['title'] = 'Phone';
+$social_links['phone']['icon'] = 'fas fa-phone';
+$social_links['phone']['prefix'] = 'tel:+1';
+
 $social_links['facebook']['title'] = 'Facebook';
 $social_links['facebook']['icon'] = 'fab fa-facebook';
 $social_links['facebook']['prefix'] = 'http://';
@@ -31,9 +35,6 @@ $social_links['medium']['title'] = 'Medium';
 $social_links['medium']['icon'] = 'fab fa-medium';
 $social_links['medium']['prefix'] = 'http://';
 
-$social_links['phone']['title'] = 'Phone';
-$social_links['phone']['icon'] = 'fas fa-phone';
-$social_links['phone']['prefix'] = 'tel:+1';
 
 $social_links['pinterest']['title'] = 'Pinterest';
 $social_links['pinterest']['icon'] = 'fab fa-pinterest';
