@@ -41,6 +41,14 @@ EOF;
 + Removed layout classes.
 </pre>
 EOF;
+        case version_compare($currentVersion, '1.2.3', '<'):
+            $content[] = <<<EOF
+<pre>
+1.2.3
+-----------
++ Horizontal rule only appears if other information is present.
+</pre>
+EOF;
 
             return true;
     }

@@ -21,8 +21,10 @@
     <?=(!empty($formatted_fax_number))? "<div><strong>Fax:</strong> $formatted_fax_number</div>" : null?>
     <?=(!empty($email)) ? "<div><strong>Email:</strong> <a href=\"mailto:<?php echo $email?>\">$email</a></div>" : null?>
   </div>
-  <hr />
   <div class="contact-other-information">
+    <?php if (!empty($other_information)):?>
+    <hr />
     <?=$other_information?>
+    <?php endif; ?>
   </div>
 </div>
