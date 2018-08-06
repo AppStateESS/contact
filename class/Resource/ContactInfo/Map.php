@@ -12,6 +12,7 @@ class Map extends \Canopy\Data{
     private $longitude;
     private $full_map_link;
     private $zoom;
+    private $accessToken;
     private $dimension_x;
     private $dimension_y;
 
@@ -27,6 +28,8 @@ class Map extends \Canopy\Data{
         $this->zoom = new \phpws2\Variable\IntegerVar(null, 'zoom');
         $this->dimension_x = new \phpws2\Variable\IntegerVar(null, 'dimension_x');
         $this->dimension_y = new \phpws2\Variable\IntegerVar(null, 'dimension_y');
+        $this->accessToken = new \phpws2\Variable\Alphanumeric(null, 'accessToken');
+        $this->pitch = new \phpws2\Variable\IntegerVar(0, 'pitch');
     }
 
     public function setThumbnailMap($thumbnail_map)
@@ -64,6 +67,26 @@ class Map extends \Canopy\Data{
     public function setDimensionY($dim_y)
     {
         $this->dimension_y->set($dim_y);
+    }
+    
+    public function setAccessToken($token)
+    {
+        $this->accessToken->set($token);
+    }
+    
+    public function setPitch($pitch)
+    {
+        $this->pitch->set($pitch);
+    }
+    
+    public function getPitch()
+    {
+        return $this->pitch->get();
+    }
+    
+    public function getAccessToken()
+    {
+        return $this->accessToken->get();
     }
 
      public function getThumbnailMap()

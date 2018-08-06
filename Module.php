@@ -58,7 +58,6 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
             return;
         }
         Factory\ContactInfo::showSiteContact();
-        $request = \Canopy\Server::getCurrentRequest();
         $module = $request->getModule();
         if ($module !== 'contact') {
             $content = Factory\ContactInfo::display();
@@ -91,14 +90,16 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
         $settings['social'] = null;
 
         // Map
+        $settings['accessToken'] = null;
         $settings['thumbnail_map'] = null;
         $settings['latitude'] = null;
         $settings['longitude'] = null;
         $settings['full_map_link'] = null;
+        $settings['pitch'] = 60;
 
-        $settings['zoom'] = 17;
+        $settings['zoom'] = 18;
         $settings['dimension_x'] = '300';
-        $settings['dimension_y'] = '300';
+        $settings['dimension_y'] = '200';
         
         $settings['front_only'] = false;
 

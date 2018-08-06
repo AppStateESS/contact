@@ -7,7 +7,7 @@ use contact\Factory;
 
 /**
  * @license http://opensource.org/licenses/lgpl-3.0.html
- * @author Matthew McNaney <mcnaney at gmail dot com>
+ * @author Matthew McNaney <mcnaneym@appstate.edu>
  */
 class ContactInfo
 {
@@ -15,6 +15,18 @@ class ContactInfo
     public static function form(\Canopy\Request $request, $active_tab)
     {
         javascript('ckeditor');
+        $contact_info = self::load();
+        $values = json_encode(self::getValues($contact_info));
+        $settings = <<<EOF
+<script>const settings= $values;</script>
+EOF;
+        \Layout::addJSHeader($settings);
+        $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/dev/index.js';
+        \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>");
+        return <<<EOF
+<div id="contact-form"></div>
+EOF;
+        /*
         \phpws2\Form::requiredScript();
 
         if (!in_array($active_tab, array('contact-info', 'map', 'social'))) {
@@ -44,24 +56,34 @@ EOF;
         }
 
         \Layout::addJSHeader($js_string);
-        $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/contact.min.js';
-        \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>");
-        //\Layout::addJSHeader('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>');
-        $template = new \phpws2\Template($values);
-        $template->setModuleTemplate('contact', 'Contact_Info_Form.html');
-        return $template->get();
+         * 
+         */
+        /**
+        $script2 = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/build/map.js';
+        \Layout::addJSHeader("<script type='text/javascript' src='$script2'></script>");
+         *
+         */
+        //$template = new \phpws2\Template($values);
+        //$template->setModuleTemplate('contact', 'Contact_Info_Form.html');
+        //return $template->get();
     }
 
     public static function load()
     {
         $contact_info = new \contact\Resource\ContactInfo;
-        $contact_info->setPhoneNumber(\phpws2\Settings::get('contact', 'phone_number'));
-        $contact_info->setFaxNumber(\phpws2\Settings::get('contact', 'fax_number'));
+        $contact_info->setPhoneNumber(\phpws2\Settings::get('contact',
+                        'phone_number'));
+        $contact_info->setFaxNumber(\phpws2\Settings::get('contact',
+                        'fax_number'));
         $contact_info->setEmail(\phpws2\Settings::get('contact', 'email'));
-        $contact_info->setSiteContactName(\phpws2\Settings::get('contact', 'site_contact_name'));
-        $contact_info->setSiteContactEmail(\phpws2\Settings::get('contact', 'site_contact_email'));
-        $contact_info->setOtherInformation(\phpws2\Settings::get('contact', 'other_information'));
-        $contact_info->setFrontOnly(\phpws2\Settings::get('contact', 'front_only'));
+        $contact_info->setSiteContactName(\phpws2\Settings::get('contact',
+                        'site_contact_name'));
+        $contact_info->setSiteContactEmail(\phpws2\Settings::get('contact',
+                        'site_contact_email'));
+        $contact_info->setOtherInformation(\phpws2\Settings::get('contact',
+                        'other_information'));
+        $contact_info->setFrontOnly(\phpws2\Settings::get('contact',
+                        'front_only'));
 
         $contact_info->setPhysicalAddress(ContactInfo\PhysicalAddress::load());
         //$contact_info->setMap(Factory\ContactInfo\Map::load());
@@ -69,7 +91,8 @@ EOF;
         return $contact_info;
     }
 
-    private static function getValues(\contact\Resource\ContactInfo $contact_info, $sort_social = false)
+    private static function getValues(\contact\Resource\ContactInfo $contact_info,
+            $sort_social = false)
     {
         $values['phone_number'] = $contact_info->getPhoneNumber();
         $values['fax_number'] = $contact_info->getFaxNumber();
@@ -83,11 +106,23 @@ EOF;
         $values['site_contact_name'] = $contact_info->getSiteContactName();
         $values['site_contact_email'] = $contact_info->getSiteContactEmail();
         $values['other_information'] = $contact_info->getOtherInformation();
+        $values['accessToken'] = \phpws2\Settings::get('contact', 'accessToken');
+        $values['thumbnail_map'] = \phpws2\Settings::get('contact', 'thumbnail_map');
+        $values['zoom'] = \phpws2\Settings::get('contact', 'zoom');
+        $x = \phpws2\Settings::get('contact', 'dimension_x');
+        $y = \phpws2\Settings::get('contact', 'dimension_y');
+        $values['pitch'] = \phpws2\Settings::get('contact', 'pitch');
+        $values['dimensions'] = "{$x}x{$y}";
+        $lat = \phpws2\Settings::get('contact', 'latitude');
+        $long = \phpws2\Settings::get('contact', 'longitude');
+        $values['openmap_link'] = ContactInfo\Map::getOpenStreetMapUrl($lat, $long);
+        $values['google_link'] = ContactInfo\Map::getGoogleMapUrl($lat, $long);
 
         $physical_address = $contact_info->getPhysicalAddress();
         $map = $contact_info->getMap();
 
-        $values = array_merge($values, ContactInfo\PhysicalAddress::getValues($physical_address));
+        $values = array_merge($values,
+                ContactInfo\PhysicalAddress::getValues($physical_address));
         //$values = array_merge($values, ContactInfo\Map::getValues($map));
 
         if ($sort_social) {
@@ -101,12 +136,14 @@ EOF;
                 $values = array_merge($values, array('social' => $social_icons));
             }
         } else {
-            $values = array_merge($values, array('social' => ContactInfo\Social::getLinks()));
+            $values = array_merge($values,
+                    array('social' => ContactInfo\Social::getLinks()));
         }
         return $values;
     }
 
-    public static function post(\contact\Resource\ContactInfo $contact_info, $values)
+    public static function post(\contact\Resource\ContactInfo $contact_info,
+            $values)
     {
         $contact_info->setPhoneNumber($values['phone_number']);
         $contact_info->setFaxNumber($values['fax_number']);
@@ -124,13 +161,19 @@ EOF;
 
     private static function save(\contact\Resource\ContactInfo $contact_info)
     {
-        \phpws2\Settings::set('contact', 'phone_number', $contact_info->getPhoneNumber());
-        \phpws2\Settings::set('contact', 'fax_number', $contact_info->getFaxNumber());
+        \phpws2\Settings::set('contact', 'phone_number',
+                $contact_info->getPhoneNumber());
+        \phpws2\Settings::set('contact', 'fax_number',
+                $contact_info->getFaxNumber());
         \phpws2\Settings::set('contact', 'email', $contact_info->getEmail());
-        \phpws2\Settings::set('contact', 'site_contact_name', $contact_info->getSiteContactName());
-        \phpws2\Settings::set('contact', 'site_contact_email', $contact_info->getSiteContactEmail());
-        \phpws2\Settings::set('contact', 'other_information', $contact_info->getOtherInformation());
-        \phpws2\Settings::set('contact', 'front_only', $contact_info->getFrontOnly());
+        \phpws2\Settings::set('contact', 'site_contact_name',
+                $contact_info->getSiteContactName());
+        \phpws2\Settings::set('contact', 'site_contact_email',
+                $contact_info->getSiteContactEmail());
+        \phpws2\Settings::set('contact', 'other_information',
+                $contact_info->getOtherInformation());
+        \phpws2\Settings::set('contact', 'front_only',
+                $contact_info->getFrontOnly());
     }
 
     public static function showSiteContact()

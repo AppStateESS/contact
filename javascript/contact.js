@@ -75,7 +75,7 @@ function ContactTab() {
 function ContactMap() {
   var $this = this
   this.start = function () {
-    $('button.grab-thumbnail').click(this.getGoogleImage)
+    $('button.grab-thumbnail').click(this.getMapboxImage)
     $('button.save-thumbnail').click(this.saveImage)
     $('button.clear-thumbnail').click(this.clearImage)
     if (thumbnail_map.length > 0) {
@@ -84,17 +84,15 @@ function ContactMap() {
     }
   }
 
-  this.getGoogleImage = function () {
+  this.getMapboxImage = function () {
     $.getJSON('contact/admin/map/locationString').done(function (data) {
       if (data.error !== undefined) {
         $('#map-error span').html(data.error)
         $('#map-error').show()
       }
-      /*
       else {
-        $this.makeGoogleMap(data.address)
+        $this.makeMapboxMap(data.address)
       }
-      */
     })
   }
 
@@ -104,7 +102,7 @@ function ContactMap() {
       $('button.clear-thumbnail').hide()
       $this.clearSuccessMessage()
     }).fail(function () {
-      alert('Failed to clear Google thumbnail')
+      alert('Failed to clear Mapbox thumbnail')
     })
   }
 
@@ -114,14 +112,14 @@ function ContactMap() {
       longitude: $('#longitude').val(),
     }).done(function (data) {
       if (data.result === undefined) {
-        alert('Failed to save Google thumbnail')
+        alert('Failed to save Mapbox thumbnail')
       } else {
         $('button.clear-thumbnail').show()
         $('button.save-thumbnail').hide()
         $this.imageSuccessMessage()
       }
     }).fail(function () {
-      alert('Failed to save Google thumbnail')
+      alert('Failed to save Mapbox thumbnail')
     })
   }
 
@@ -162,7 +160,7 @@ function ContactMap() {
     )
   }
 
-  this.makeGoogleMap = function (address) {
+  this.makeMapboxMap = function (address) {
     var geocoder
     var latitude
     var longitude
@@ -175,15 +173,15 @@ function ContactMap() {
       if (status == google.maps.GeocoderStatus.OK) {
         latitude = results[0].geometry.location.lat()
         longitude = results[0].geometry.location.lng()
-        $this.createGoogleLink(latitude, longitude)
+        $this.createMapboxLink(latitude, longitude)
       } else {
         alert('Geocode was not successful for the following reason: ' + status)
       }
     })
   }
 
-  this.createGoogleLink = function (latitude, longitude) {
-    $.getJSON('contact/admin/map/getGoogleLink', {
+  this.createMapboxLink = function (latitude, longitude) {
+    $.getJSON('contact/admin/map/getMapboxLink', {
       'latitude': latitude,
       'longitude': longitude,
     }).done(function (data) {

@@ -1,0 +1,223 @@
+'use strict'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import Navs from 'canopy-react-navs'
+import ContactInfo from './ContactInfo'
+import Map from './Map'
+import SocialIcons from './SocialIcons'
+import Hours from './Hours'
+
+/* global $, CKEDITOR */
+
+export default class ContactForm extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      settings: Object.assign({}, props.settings),
+      active: 'social',
+      errors: {
+        building: false,
+        phone_number: false
+      },
+      message: null,
+      messageType: 'success'
+    }
+    this.tabs = [
+      {
+        label: 'Contact Information',
+        name: 'contact',
+      }, {
+        label: 'Mapping',
+        name: 'map',
+      }, {
+        label: 'Social icons',
+        name: 'social',
+      }, {
+        label: 'Operation hours',
+        name: 'hours',
+      },
+    ]
+  }
+
+  componentDidMount() {
+    if (this.state.active === 'contact') {
+      $('[data-toggle="tooltip"]').tooltip()
+      CKEDITOR.replace('other-information')
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.active === 'contact' && prevState.active !== 'contact') {
+      CKEDITOR.replace('other-information')
+    }
+  }
+
+  setActive(tab) {
+    this.setState({active: tab})
+  }
+
+  update(param, e) {
+    const {settings} = this.state
+    let value
+    if (param === 'pitch') {
+      e = settings.pitch === '60'
+        ? '0'
+        : '60'
+    }
+
+    if (e === null) {
+      value = null
+    } else if (typeof e === 'string') {
+      value = e
+    } else {
+      value = e.target.value
+    }
+
+    settings[param] = value
+    this.setState({settings})
+  }
+
+  saveAccessToken() {
+    $.ajax({
+      url: './contact/admin/map/saveAccessToken',
+      data: {
+        accessToken: this.state.settings.accessToken
+      },
+      dataType: 'json',
+      type: 'post',
+      success: () => {},
+      error: () => {},
+    })
+  }
+
+  saveContactInfo() {
+    if (this.checkSettings()) {
+      const otherInformation = CKEDITOR.instances['other-information'].getData()
+      const data = this.state.settings
+      data.other_information = otherInformation
+      $.ajax({
+        url: './contact/admin/contactinfo',
+        data: data,
+        dataType: 'json',
+        type: 'post',
+        success: () => {
+          this.setState({message: 'Settings saved', messageType: 'success'})
+          window.scrollTo(0, 0)
+        },
+        error: () => {
+          this.setState({message: 'Error: Could not save', messageType: 'danger'})
+        }
+      })
+    } else {
+      window.scrollTo(0, 0)
+      this.setState(
+        {message: 'Error: make sure required information is filled out', messageType: 'danger'}
+      )
+    }
+  }
+
+  checkSettings() {
+    let saveAllowed = true
+    const errors = this.state.errors
+    const {building, phone_number, site_contact_email, site_contact_name,} = this.state.settings
+
+    if (building === null || building.length === 0) {
+      saveAllowed = false
+      errors.building = true
+    } else {
+      errors.building = false
+    }
+
+    if (phone_number === null || phone_number.length === 0) {
+      saveAllowed = false
+      errors.phone_number = true
+    } else {
+      errors.phone_number = false
+    }
+
+    if ((site_contact_email !== null && site_contact_email.length > 0) && (site_contact_name === null || site_contact_name.length === 0)) {
+      saveAllowed = false
+      errors.site_contact_name = 'Site contact name needed with email address'
+    } else {
+      errors.site_contact_name = false
+    }
+
+    this.setState({errors})
+    return saveAllowed
+  }
+  
+  saveSocial(label) {
+    console.log(label)
+    console.log(this.state.settings.social)
+    const url = this.state.settings.social[label].url
+    $.ajax({
+      url: 'contact/admin/social',
+      data: {label, url},
+      dataType: 'json',
+      type: 'post',
+      success: ()=>{},
+      error: ()=>{}
+    })
+  }
+
+  updateSocial(e, icon) {
+    const settings = this.state.settings
+    const social = settings.social
+    social[icon].url = e.target.value
+    this.setState({settings})
+  }
+
+  getForm() {
+    switch (this.state.active) {
+      case 'contact':
+        return (
+          <ContactInfo
+            {...this.state}
+            update={(param, value) => this.update(param, value)}
+            save={() => this.saveContactInfo()}
+            errors={this.state.errors}/>
+        )
+
+      case 'map':
+        return (
+          <Map
+            {...this.state}
+            update={(param, value) => this.update(param, value)}
+            saveAccessToken={() => this.saveAccessToken()}
+            errors={this.state.errors}/>
+        )
+
+      case 'hours':
+        return <Hours {...this.state}/>
+
+      case 'social':
+        return <SocialIcons
+          saveSocial={(label) => this.saveSocial(label)}
+          social={this.state.settings.social}
+          update={(e, icon) => this.updateSocial(e, icon)}/>
+    }
+  }
+
+  render() {
+    let message
+    if (this.state.message) {
+      const _class = `alert alert-${this.state.messageType}`
+      message = <div className={_class}>{this.state.message}</div>
+    }
+    return (
+      <div>
+        <Navs
+          tabs={this.tabs}
+          defaultActive={this.state.active}
+          handleClick={(active) => this.setActive(active)}/> {message}
+        {this.getForm()}
+      </div>
+    )
+  }
+}
+
+ContactForm.propTypes = {
+  settings: PropTypes.object
+}
+
+ContactForm.defaultProps = {}

@@ -27,4 +27,10 @@
     <?=$other_information?>
     <?php endif; ?>
   </div>
+  <?php if ($thumbnail_map):?>
+  <div>
+    <div><a href="<?=$openmap_link?>" target="_blank"><img src="<?=$thumbnail_map?>" class="img-fluid"/></a></div>
+    <div class="text-center"><small><a href="<?=$google_link?>" target="_blank">View on Google Maps</a></small></div>
+  </div>
+  <?php endif;?>
 </div>

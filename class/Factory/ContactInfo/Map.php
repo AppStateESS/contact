@@ -9,7 +9,7 @@ namespace contact\Factory\ContactInfo;
 class Map
 {
 
-    public static function getGoogleSearchString(\contact\Resource\ContactInfo\PhysicalAddress $physical_address)
+    public static function getMapSearchString(\contact\Resource\ContactInfo\PhysicalAddress $physical_address)
     {
         $building = $physical_address->getBuilding();
         $street = $physical_address->getStreet();
@@ -29,14 +29,24 @@ class Map
         $map = self::load();
         $size = \phpws2\Settings::get('contact', 'dimension_x') . 'x' . \phpws2\Settings::get('contact', 'dimension_y');
         $zoom = \phpws2\Settings::get('contact', 'zoom');
-        return "https://maps.googleapis.com/maps/api/staticmap?center=$latitude,$longitude&size=$size&maptype=roadmap&zoom=$zoom&markers=color:red%7Clabel:A%7C$latitude,$longitude";
+        $accessToken = \phpws2\Settings::get('contact', 'accessToken');
+        $pitch = \phpws2\Settings::get('contact', 'pitch');
+        
+        return "https://api.mapbox.com/styles/v1/mapbox/streets-v10/static/$longitude,$latitude,$zoom,0,$pitch/$size?access_token=$accessToken";
     }
 
-    public static function getMapUrl($latitude, $longitude)
+    public static function getGoogleMapUrl($latitude, $longitude)
     {
         $map = self::load();
         $zoom = $map->getZoom();
         return "https://www.google.com/maps/place/$latitude,$longitude/z=$zoom";
+    }
+    
+    public static function getOpenStreetMapUrl($latitude, $longitude)
+    {
+        $map = self::load();
+        $zoom = $map->getZoom();
+        return "https://www.openstreetmap.org/#map=$zoom/$latitude/$longitude/&layers=N";
     }
 
     public static function getValues(\contact\Resource\ContactInfo\Map $map)
@@ -48,6 +58,7 @@ class Map
         $values['zoom'] = $map->getZoom();
         $values['dimension_x'] = $map->getDimensionX();
         $values['dimension_y'] = $map->getDimensionY();
+        $values['pitch'] = $map->getPitch();
         return $values;
     }
 
@@ -62,6 +73,7 @@ class Map
         $map->setZoom(\phpws2\Settings::get('contact', 'zoom'));
         $map->setDimensionX(\phpws2\Settings::get('contact', 'dimension_x'));
         $map->setDimensionY(\phpws2\Settings::get('contact', 'dimension_y'));
+        $map->setPitch(\phpws2\Settings::get('contact', 'pitch'));
         return $map;
     }
 
@@ -75,10 +87,10 @@ class Map
 
     public static function createMapThumbnail($latitude, $longitude)
     {
-        $google_url = self::getImageUrl($latitude, $longitude);
-        $curl = \curl_init($google_url);
+        $image_url = self::getImageUrl($latitude, $longitude);
+        $curl = \curl_init($image_url);
 
-        $filename = 'images/contact/googlemap_' . time() . '.png';
+        $filename = 'images/contact/map_' . time() . '.jpg';
         $fp = fopen(PHPWS_HOME_DIR . $filename, "w");
         \curl_setopt($curl, CURLOPT_FILE, $fp);
         \curl_setopt($curl, CURLOPT_HEADER, 0);
@@ -91,8 +103,9 @@ class Map
         $map->setThumbnailMap($filename);
         $map->setLatitude($latitude);
         $map->setLongitude($longitude);
-        $map->setFullMapLink(self::getMapUrl($latitude, $longitude));
+        $map->setFullMapLink(self::getOpenStreetMapUrl($latitude, $longitude));
         self::save($map);
+        return $filename;
     }
 
     public static function clearThumbnail()

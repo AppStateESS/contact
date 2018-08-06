@@ -37,7 +37,7 @@ class Map extends \phpws2\Http\Controller
             case 'getGoogleLink':
                 return $this->getGoogleLink($request);
                 break;
-
+            
             case 'saveThumbnail':
                 return $this->saveThumbnail($request);
                 break;
@@ -45,18 +45,24 @@ class Map extends \phpws2\Http\Controller
             case 'clearThumbnail':
                 Factory::clearThumbnail();
                 $json['success'] = 1;
-                $response = new \phpws2\View\JsonView($json);
-                return $response;
+                $view = new \phpws2\View\JsonView($json);
+                return $view;
                 break;
         }
     }
 
-    private function getGoogleLink(\Canopy\Request $request)
+    public function post(\Canopy\Request $request)
     {
-        $latitude = $request->getVar('latitude');
-        $longitude = $request->getVar('longitude');
-        $json['url'] = Factory::getImageUrl($latitude, $longitude);
-        $response = new \phpws2\View\JsonView($json);
+        $command = $request->shiftCommand();
+        switch ($command) {
+            case 'saveAccessToken':
+                \phpws2\Settings::set('contact', 'accessToken',
+                        $request->pullPostString('accessToken'));
+                break;
+        }
+        $json['result'] = 'true';
+        $view = new \phpws2\View\JsonView($json);
+        $response = new \Canopy\Response($view);
         return $response;
     }
 
@@ -67,25 +73,32 @@ class Map extends \phpws2\Http\Controller
         $physical_address = $contact_info->getPhysicalAddress();
 
         try {
-            $json['address'] = Factory::getGoogleSearchString($physical_address);
+            $json['address'] = Factory::getMapSearchString($physical_address);
         } catch (\Exception $e) {
             $json['error'] = $e->getMessage();
         }
 
-        $response = new \phpws2\View\JsonView($json);
-        return $response;
+        $view = new \phpws2\View\JsonView($json);
+        return $view;
     }
 
     private function saveThumbnail(\Canopy\Request $request)
     {
-        $latitude = $request->getVar('latitude');
-        $longitude = $request->getVar('longitude');
+        $latitude = $request->pullGetString('latitude');
+        $longitude = $request->pullGetString('longitude');
+        $dimensions = $request->pullGetString('dimensions');
+        $pitch = $request->pullGetString('pitch');
+        $zoom = $request->pullGetInteger('zoom');
+        
+        list($x, $y) = explode('x', $dimensions);
+        \phpws2\Settings::set('contact', 'dimension_x', $x);
+        \phpws2\Settings::set('contact', 'dimension_y', $y);
+        \phpws2\Settings::set('contact', 'pitch', $pitch);
+        \phpws2\Settings::set('contact', 'zoom', $zoom);
 
-        Factory::createMapThumbnail($latitude, $longitude);
-
-        $json['result'] = 'true';
-        $response = new \phpws2\View\JsonView($json);
-        return $response;
+        $json['image'] = Factory::createMapThumbnail($latitude, $longitude);
+        $view = new \phpws2\View\JsonView($json);
+        return $view;
     }
 
 }

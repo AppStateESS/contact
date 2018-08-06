@@ -27,8 +27,8 @@ class Social extends \phpws2\Http\Controller
     public function post(\Canopy\Request $request)
     {
         $social_links = \contact\Factory\ContactInfo\Social::pullSavedLinks();
-        $label = $request->getVar('label');
-        $url = $request->getVar('url');
+        $label = $request->pullPostString('label');
+        $url = $request->pullPostString('url');
         if (empty($url)) {
             unset($social_links[$label]);
         } else {
