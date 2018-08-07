@@ -58,6 +58,14 @@ EOF;
 + Rewritten in React to use new maps.
 </pre>
 EOF;
+            case version_compare($currentVersion, '1.3.1', '<'):
+            $content[] = <<<EOF
+<pre>
+1.3.1
+-----------
++ Removed unused code.
+</pre>
+EOF;
 
             return true;
     }
