@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Hours = ({}) => {
-  return (<div>Hours</div>)
+  return (<div><h2>Hours of operation</h2></div>)
 }
 
 Hours.propTypes = {}

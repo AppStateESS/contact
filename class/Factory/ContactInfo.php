@@ -21,7 +21,8 @@ class ContactInfo
 <script>const settings= $values;</script>
 EOF;
         \Layout::addJSHeader($settings);
-        $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/dev/index.js';
+        //$script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/dev/index.js';
+        $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/build/index.js';
         \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>");
         return <<<EOF
 <div id="contact-form"></div>

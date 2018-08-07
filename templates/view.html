@@ -13,7 +13,7 @@
   </div>
   <div class="contact-social-icons">
     <?php if (!empty($social)): foreach($social as $label=>$link): extract($link);?>
-    <a href="<?=$prefix,$url?>"><i class="fa-2x <?=$icon?>" title="<?=$title?>"></i></a>
+    <a href="<?=$prefix,$url?>" target="_blank"><i class="fa-2x <?=$icon?>" title="<?=$title?>"></i></a>
     <?php endforeach;endif;?>
   </div>
   <div class="contact-digital">
@@ -30,7 +30,7 @@
   <?php if ($thumbnail_map):?>
   <div>
     <div><a href="<?=$openmap_link?>" target="_blank"><img src="<?=$thumbnail_map?>" class="img-fluid"/></a></div>
-    <div class="text-center"><small><a href="<?=$google_link?>" target="_blank">View on Google Maps</a></small></div>
+    <div class="text-center"><small><a href="<?=$openmap_link?>" target="_blank">OpenStreetMap</a> | <a href="<?=$google_link?>" target="_blank">Google</a></small></div>
   </div>
   <?php endif;?>
 </div>

@@ -3,10 +3,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import InputField from 'canopy-react-inputfield'
 import State from './State'
+import BigCheckbox from 'canopy-react-bigcheckbox'
 
-const ContactInfo = ({settings, update, save, errors}) => {
+const ContactInfo = ({settings, update, save, errors,}) => {
   return (
     <div>
+      <BigCheckbox
+        label="Show only on front page"
+        checked={settings.front_only}
+        handle={() => update('front_only', !settings.front_only)}/>
       <div className="row">
         <div className="col-md-6">
           <h3>On Campus</h3>
@@ -39,7 +44,6 @@ const ContactInfo = ({settings, update, save, errors}) => {
                 label="Phone number"
                 value={settings.phone_number}
                 placeholder="###-###-####"
-                required={true}
                 errorMessage={errors.phone_number === true
                   ? 'Phone number may not be empty'
                   : null}
@@ -153,7 +157,7 @@ ContactInfo.propTypes = {
   settings: PropTypes.object,
   update: PropTypes.func,
   save: PropTypes.func,
-  errors: PropTypes.object,
+  errors: PropTypes.object
 }
 
 ContactInfo.defaultProps = {}

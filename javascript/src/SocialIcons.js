@@ -3,8 +3,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import SocialForm from './SocialForm'
 
-/* global $ */
-
 class SocialIcons extends Component {
   constructor(props) {
     super(props)
@@ -15,6 +13,7 @@ class SocialIcons extends Component {
 
   changeTab(e, tab) {
     e.preventDefault()
+    this.props.clearMessage()
     this.setState({currentTab: tab})
   }
 
@@ -42,6 +41,7 @@ class SocialIcons extends Component {
         </div>
         <div className="col-sm-9">
           <SocialForm
+            clearUrl={()=> update('', this.state.currentTab)}
             saveUrl={() => this.props.saveSocial(this.state.currentTab)}
             social={this.props.social[this.state.currentTab]}
             update={(e) => update(e, this.state.currentTab)}/>
@@ -55,6 +55,7 @@ SocialIcons.propTypes = {
   social: PropTypes.object,
   update: PropTypes.func,
   saveSocial: PropTypes.func,
+  clearMessage: PropTypes.func,
 }
 
 SocialIcons.defaultProps = {}

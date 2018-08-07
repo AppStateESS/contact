@@ -77,6 +77,7 @@ class Social
     {
         $serial_links = serialize($links);
         \phpws2\Settings::set('contact', 'social', $serial_links);
+        return array('success'=>true);
     }
 
     public static function getLinksAsJavascriptObject(array $links)

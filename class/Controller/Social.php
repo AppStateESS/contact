@@ -35,8 +35,9 @@ class Social extends \phpws2\Http\Controller
             $social_links[$label] = preg_replace('/https?:\/\//', '', $url);
         }
         \contact\Factory\ContactInfo\Social::saveLinks($social_links);
-        echo 'post successful';
-        exit;
+        $view = new \phpws2\View\JsonView(['success'=>true]);
+        $response = new \Canopy\Response($view);
+        return $response;
     }
 
 }

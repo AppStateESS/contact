@@ -14,28 +14,31 @@ export default class ContactForm extends Component {
     super(props)
     this.state = {
       settings: Object.assign({}, props.settings),
-      active: 'social',
+      active: 'contact',
       errors: {
         building: false,
-        phone_number: false
+        phone_number: false,
       },
       message: null,
-      messageType: 'success'
+      messageType: 'success',
     }
     this.tabs = [
       {
         label: 'Contact Information',
-        name: 'contact',
+        name: 'contact'
       }, {
         label: 'Mapping',
-        name: 'map',
+        name: 'map'
       }, {
         label: 'Social icons',
-        name: 'social',
-      }, {
+        name: 'social'
+      }
+      /*
+      , {
         label: 'Operation hours',
-        name: 'hours',
+        name: 'hours'
       },
+      */
     ]
   }
 
@@ -51,75 +54,11 @@ export default class ContactForm extends Component {
       CKEDITOR.replace('other-information')
     }
   }
-
-  setActive(tab) {
-    this.setState({active: tab})
-  }
-
-  update(param, e) {
-    const {settings} = this.state
-    let value
-    if (param === 'pitch') {
-      e = settings.pitch === '60'
-        ? '0'
-        : '60'
-    }
-
-    if (e === null) {
-      value = null
-    } else if (typeof e === 'string') {
-      value = e
-    } else {
-      value = e.target.value
-    }
-
-    settings[param] = value
-    this.setState({settings})
-  }
-
-  saveAccessToken() {
-    $.ajax({
-      url: './contact/admin/map/saveAccessToken',
-      data: {
-        accessToken: this.state.settings.accessToken
-      },
-      dataType: 'json',
-      type: 'post',
-      success: () => {},
-      error: () => {},
-    })
-  }
-
-  saveContactInfo() {
-    if (this.checkSettings()) {
-      const otherInformation = CKEDITOR.instances['other-information'].getData()
-      const data = this.state.settings
-      data.other_information = otherInformation
-      $.ajax({
-        url: './contact/admin/contactinfo',
-        data: data,
-        dataType: 'json',
-        type: 'post',
-        success: () => {
-          this.setState({message: 'Settings saved', messageType: 'success'})
-          window.scrollTo(0, 0)
-        },
-        error: () => {
-          this.setState({message: 'Error: Could not save', messageType: 'danger'})
-        }
-      })
-    } else {
-      window.scrollTo(0, 0)
-      this.setState(
-        {message: 'Error: make sure required information is filled out', messageType: 'danger'}
-      )
-    }
-  }
-
+  
   checkSettings() {
     let saveAllowed = true
     const errors = this.state.errors
-    const {building, phone_number, site_contact_email, site_contact_name,} = this.state.settings
+    const {building, phone_number, site_contact_email, site_contact_name} = this.state.settings
 
     if (building === null || building.length === 0) {
       saveAllowed = false
@@ -128,12 +67,14 @@ export default class ContactForm extends Component {
       errors.building = false
     }
 
+    /*
     if (phone_number === null || phone_number.length === 0) {
       saveAllowed = false
       errors.phone_number = true
     } else {
       errors.phone_number = false
     }
+    */
 
     if ((site_contact_email !== null && site_contact_email.length > 0) && (site_contact_name === null || site_contact_name.length === 0)) {
       saveAllowed = false
@@ -146,27 +87,6 @@ export default class ContactForm extends Component {
     return saveAllowed
   }
   
-  saveSocial(label) {
-    console.log(label)
-    console.log(this.state.settings.social)
-    const url = this.state.settings.social[label].url
-    $.ajax({
-      url: 'contact/admin/social',
-      data: {label, url},
-      dataType: 'json',
-      type: 'post',
-      success: ()=>{},
-      error: ()=>{}
-    })
-  }
-
-  updateSocial(e, icon) {
-    const settings = this.state.settings
-    const social = settings.social
-    social[icon].url = e.target.value
-    this.setState({settings})
-  }
-
   getForm() {
     switch (this.state.active) {
       case 'contact':
@@ -192,10 +112,106 @@ export default class ContactForm extends Component {
 
       case 'social':
         return <SocialIcons
+          clearMessage={()=>this.setState({message: ''})}
+          clearUrl={(e, icon) => this.updateSocial(e, icon)}
           saveSocial={(label) => this.saveSocial(label)}
           social={this.state.settings.social}
           update={(e, icon) => this.updateSocial(e, icon)}/>
     }
+  }
+
+  saveAccessToken() {
+    $.ajax({
+      url: './contact/admin/map/saveAccessToken',
+      data: {
+        accessToken: this.state.settings.accessToken
+      },
+      dataType: 'json',
+      type: 'post',
+      success: () => {},
+      error: () => {}
+    })
+  }
+
+  saveContactInfo() {
+    if (this.checkSettings()) {
+      const otherInformation = CKEDITOR.instances['other-information'].getData()
+      const data = this.state.settings
+      data.other_information = otherInformation
+      $.ajax({
+        url: './contact/admin/contactinfo',
+        data: data,
+        dataType: 'json',
+        type: 'post',
+        success: () => {
+          this.setState({message: 'Settings saved', messageType: 'success',})
+          window.scrollTo(0, 0)
+        },
+        error: () => {
+          this.setState({message: 'Error: Could not save', messageType: 'danger',})
+        },
+      })
+    } else {
+      window.scrollTo(0, 0)
+      this.setState(
+        {message: 'Error: make sure required information is filled out', messageType: 'danger',}
+      )
+    }
+  }
+  
+  saveSocial(label) {
+    const url = this.state.settings.social[label].url
+    $.ajax({
+      url: 'contact/admin/social',
+      data: {
+        label,
+        url,
+      },
+      dataType: 'json',
+      type: 'post',
+      success: () => {
+        this.setState({message: 'Social icon saved'})
+      }
+    })
+  }
+  
+  setActive(tab) {
+    this.setState({active: tab})
+  }
+  
+  update(param, e) {
+    const {settings} = this.state
+    let value
+    if (param === 'pitch') {
+      e = settings.pitch === '60'
+        ? '0'
+        : '60'
+    }
+    if (e === null) {
+      value = null
+    } else if (typeof e === 'object') {
+      value = e.target.value
+    } else {
+      value = e
+    }
+
+    settings[param] = value
+    this.setState({settings})
+  }
+
+  updateSocial(e, icon) {
+    let value
+    if (e === null) {
+      value = null
+    } else if (typeof e === 'string') {
+      value = e
+    } else {
+      value = e.target.value
+    }
+    const settings = this.state.settings
+    const social = settings.social
+    social[icon].url = value
+    this.setState({settings})
   }
 
   render() {
