@@ -50,6 +50,15 @@ EOF;
 </pre>
 EOF;
 
+            case version_compare($currentVersion, '1.3.0', '<'):
+            $content[] = <<<EOF
+<pre>
+1.3.0
+-----------
++ Rewritten in React to use new maps.
+</pre>
+EOF;
+
             return true;
     }
 }
