@@ -19,7 +19,7 @@
   <div class="contact-digital">
     <?=(!empty($phone_number)) ? "<div><strong>Phone:</strong> <a href=\"tel:+1{$phone_number}\">$formatted_phone_number</a></div>":null?>
     <?=(!empty($formatted_fax_number))? "<div><strong>Fax:</strong> $formatted_fax_number</div>" : null?>
-    <?=(!empty($email)) ? "<div><strong>Email:</strong> <a href=\"mailto:<?php echo $email?>\">$email</a></div>" : null?>
+    <?=(!empty($email)) ? "<div><strong>Email:</strong> <a href=\"mailto:$email\">$email</a></div>" : null?>
   </div>
   <div class="contact-other-information">
     <?php if (!empty($other_information)):?>
