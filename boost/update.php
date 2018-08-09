@@ -66,6 +66,14 @@ EOF;
 + Removed unused code.
 </pre>
 EOF;
+            case version_compare($currentVersion, '1.3.2', '<'):
+            $content[] = <<<EOF
+<pre>
+1.3.2
+-----------
++ Fixed email address printing.
+</pre>
+EOF;
 
             return true;
     }
