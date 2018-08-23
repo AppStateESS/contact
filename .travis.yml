@@ -16,7 +16,7 @@ deploy:
   skip_cleanup: true
   api_key:
     secure: TQlrQYK7d5rv4NYJL55k1xNl0vhUoEUg5jTmwbOXCpx4qeu3o4Ep1MIkR9HJ5g6/SSQkhp1KLvQM8D1psIX7SXU4fCxu/mxPODt0XhuC6aHIFmXVMhlnGEPgwnQCnjzss4gjJ0szNmul1f/siEWY9kySEAwkpZ7hZzWsIyuypE8/OOJWHNYEsGp/siTnphUYypKZMDfD6a7I6YNgDsJDMtFSSUrmKKB+3bXaW1gM5OLpwcQ+dUfTsEAtxN5+v9Cq3k3erdti8A40CdS6l72cohajK0GSxExpvejHdYZetPr2qVwn+5atdeJH9LLAyz2MZlsb8empjiO2j60ZU/d4s9JiFAgaq4hT0l+zBY93qZ4qrRcuuXWgJy3dcbGn4UJjhLAoUtWY1Qv1ZzAtiT/BUtIhjIedVXxzfFfyt5GBY1Q/yLDcPhEO7GCbGd9qMHUwxHVuFDro3cZFGCWXmbr6EVIuCl8ElLLDTmfXT+tnxRLJ48qV0xFesVvmm/MEwNbbY/4T9O8ALEhom1ABdiQUfcbSLNNh923sWxHRdVBdmyvgAcWcB0j2IKOYILK/UvkusKixaoC5hwq3ulKXim9MmKx2SFFoL0bBup+xNd2e3quQIYNAhwkEUi4ijLYgnsh6k3NvjZ6wkpYkvaKUlUhY2OoqOsXtJqoTJs5eU0vm1EQ=
-  file: contacts.tar.gz
+  file: contact.tar.gz
   overwrite: true
   on:
     repo: AppStateESS/contact
