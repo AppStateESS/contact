@@ -74,6 +74,15 @@ EOF;
 + Fixed email address printing.
 </pre>
 EOF;
+            case version_compare($currentVersion, '1.4.0', '<'):
+            $content[] = <<<EOF
+<pre>
+1.4.0
+-----------
++ Bug fixes with display
++ Can set thumbnail by lat/long.
+</pre>
+EOF;
 
             return true;
     }
