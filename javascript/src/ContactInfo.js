@@ -32,6 +32,7 @@ const ContactInfo = ({settings, update, save, errors,}) => {
               <InputField
                 name="room_number"
                 label="Room number"
+                placeholder="Numbers only"
                 value={settings.room_number}
                 classes="mb-3"
                 change={(e) => update('room_number', e)}/>
