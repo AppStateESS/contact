@@ -53,11 +53,11 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
 
     public function runTime(\Canopy\Request $request)
     {
+        Factory\ContactInfo::showSiteContact();
         $frontOnly = \phpws2\Settings::get('contact', 'front_only');
         if ($frontOnly && !\phpws\PHPWS_Core::atHome()) {
             return;
         }
-        Factory\ContactInfo::showSiteContact();
         $module = $request->getModule();
         if ($module !== 'contact') {
             $content = Factory\ContactInfo::display();
