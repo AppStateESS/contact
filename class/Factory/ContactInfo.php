@@ -68,6 +68,7 @@ EOF;
             $values['formatted_fax_number'] = $contact_info->getFaxNumber(true);
         }
 
+        
         $values['front_only'] = $contact_info->getFrontOnly();
         $values['site_contact_name'] = $contact_info->getSiteContactName();
         $values['site_contact_email'] = $contact_info->getSiteContactEmail();
@@ -82,6 +83,8 @@ EOF;
         $values['dimensions'] = "{$x}x{$y}";
         $lat = \phpws2\Settings::get('contact', 'latitude');
         $long = \phpws2\Settings::get('contact', 'longitude');
+        $values['latitude'] = $lat;
+        $values['longitude'] = $long;
         $values['openmap_link'] = ContactInfo\Map::getOpenStreetMapUrl($lat,
                         $long);
         $values['google_link'] = ContactInfo\Map::getGoogleMapUrl($lat, $long);
