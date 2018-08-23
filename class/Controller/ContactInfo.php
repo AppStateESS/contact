@@ -34,8 +34,8 @@ class ContactInfo extends \phpws2\Http\Controller
 
     private function postContactInfo(\Canopy\Request $request)
     {
-        $values = $request->getVars();
-        Factory::post(Factory::load(), $values['vars']);
+        $values = $request->pullPostVars();
+        Factory::post(Factory::load(), $values);
         $view = new \phpws2\View\JsonView(array('success'=>true));
         $response = new \Canopy\Response($view);
         return $response;
