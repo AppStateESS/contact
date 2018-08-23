@@ -58,7 +58,7 @@ export default class ContactForm extends Component {
   checkSettings() {
     let saveAllowed = true
     const errors = this.state.errors
-    const {building, phone_number, site_contact_email, site_contact_name} = this.state.settings
+    const {building, site_contact_email, site_contact_name} = this.state.settings
 
     if (building === null || building.length === 0) {
       saveAllowed = false
@@ -66,15 +66,6 @@ export default class ContactForm extends Component {
     } else {
       errors.building = false
     }
-
-    /*
-    if (phone_number === null || phone_number.length === 0) {
-      saveAllowed = false
-      errors.phone_number = true
-    } else {
-      errors.phone_number = false
-    }
-    */
 
     if ((site_contact_email !== null && site_contact_email.length > 0) && (site_contact_name === null || site_contact_name.length === 0)) {
       saveAllowed = false
