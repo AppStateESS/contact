@@ -5,6 +5,8 @@ namespace contact\Factory;
 use contact\Resource\ContactInfo\PhysicalAddress;
 use contact\Factory;
 
+require_once PHPWS_SOURCE_DIR . 'mod/contact/config/defines.php';
+
 /**
  * @license http://opensource.org/licenses/lgpl-3.0.html
  * @author Matthew McNaney <mcnaneym@appstate.edu>
@@ -21,52 +23,15 @@ class ContactInfo
 <script>const settings= $values;</script>
 EOF;
         \Layout::addJSHeader($settings);
-        //$script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/dev/index.js';
-        $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/build/index.js';
+        if (CONTACT_SCRIPT_PRODUCTION) {
+            $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/build/index.js';
+        } else {
+            $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/dev/index.js';
+        }
         \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>");
         return <<<EOF
 <div id="contact-form"></div>
 EOF;
-        /*
-        \phpws2\Form::requiredScript();
-
-        if (!in_array($active_tab, array('contact-info', 'map', 'social'))) {
-            $active_tab = 'contact-info';
-        }
-
-        $thumbnail_map = \phpws2\Settings::get('contact', 'thumbnail_map');
-
-        $contact_info = self::load();
-        $values = self::getValues($contact_info);
-        require PHPWS_SOURCE_DIR . 'mod/contact/config/states.php';
-        $values['states'] = $states;
-        if (!empty($thumbnail_map)) {
-            $values['thumbnail_map'] = "<img src='$thumbnail_map' />";
-        } else {
-            $values['thumbnail_map'] = null;
-        }
-        $js_social_links = ContactInfo\Social::getLinksAsJavascriptObject($values['social']);
-
-        $js_string = <<<EOF
-<script type='text/javascript'>var active_tab = '$active_tab';var thumbnail_map = '$thumbnail_map';var social_urls = $js_social_links;</script>
-EOF;
-
-        if (isset($_SESSION['Contact_Message'])) {
-            $values['message'] = $_SESSION['Contact_Message'];
-            unset($_SESSION['Contact_Message']);
-        }
-
-        \Layout::addJSHeader($js_string);
-         * 
-         */
-        /**
-        $script2 = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/build/map.js';
-        \Layout::addJSHeader("<script type='text/javascript' src='$script2'></script>");
-         *
-         */
-        //$template = new \phpws2\Template($values);
-        //$template->setModuleTemplate('contact', 'Contact_Info_Form.html');
-        //return $template->get();
     }
 
     public static function load()
@@ -108,7 +73,8 @@ EOF;
         $values['site_contact_email'] = $contact_info->getSiteContactEmail();
         $values['other_information'] = $contact_info->getOtherInformation();
         $values['accessToken'] = \phpws2\Settings::get('contact', 'accessToken');
-        $values['thumbnail_map'] = \phpws2\Settings::get('contact', 'thumbnail_map');
+        $values['thumbnail_map'] = \phpws2\Settings::get('contact',
+                        'thumbnail_map');
         $values['zoom'] = \phpws2\Settings::get('contact', 'zoom');
         $x = \phpws2\Settings::get('contact', 'dimension_x');
         $y = \phpws2\Settings::get('contact', 'dimension_y');
@@ -116,7 +82,8 @@ EOF;
         $values['dimensions'] = "{$x}x{$y}";
         $lat = \phpws2\Settings::get('contact', 'latitude');
         $long = \phpws2\Settings::get('contact', 'longitude');
-        $values['openmap_link'] = ContactInfo\Map::getOpenStreetMapUrl($lat, $long);
+        $values['openmap_link'] = ContactInfo\Map::getOpenStreetMapUrl($lat,
+                        $long);
         $values['google_link'] = ContactInfo\Map::getGoogleMapUrl($lat, $long);
 
         $physical_address = $contact_info->getPhysicalAddress();
@@ -152,7 +119,7 @@ EOF;
         $contact_info->setSiteContactName($values['site_contact_name']);
         $contact_info->setSiteContactEmail($values['site_contact_email']);
         $contact_info->setOtherInformation($values['other_information']);
-        $contact_info->setFrontOnly(isset($values['front_only']));
+        $contact_info->setFrontOnly($values['front_only']);
         self::save($contact_info);
 
         $physical_address = $contact_info->getPhysicalAddress();
