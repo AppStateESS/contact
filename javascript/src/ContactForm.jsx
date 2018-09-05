@@ -6,6 +6,7 @@ import ContactInfo from './ContactInfo'
 import Map from './Map'
 import SocialIcons from './SocialIcons'
 import Hours from './Hours'
+import EmailSettings from './EmailSettings'
 
 /* global $, CKEDITOR */
 
@@ -32,13 +33,11 @@ export default class ContactForm extends Component {
       }, {
         label: 'Social icons',
         name: 'social'
-      }
-      /*
-      , {
-        label: 'Operation hours',
-        name: 'hours'
+      }, {
+        label: 'Email',
+        name: 'email'
       },
-      */
+
     ]
   }
 
@@ -54,7 +53,7 @@ export default class ContactForm extends Component {
       CKEDITOR.replace('other-information')
     }
   }
-  
+
   checkSettings() {
     let saveAllowed = true
     const errors = this.state.errors
@@ -103,11 +102,16 @@ export default class ContactForm extends Component {
 
       case 'social':
         return <SocialIcons
-          clearMessage={()=>this.setState({message: ''})}
+          clearMessage={() => this.setState({message: ''})}
           clearUrl={(e, icon) => this.updateSocial(e, icon)}
           saveSocial={(label) => this.saveSocial(label)}
           social={this.state.settings.social}
           update={(e, icon) => this.updateSocial(e, icon)}/>
+
+      case 'email':
+        return <EmailSettings
+          settings={this.state.settings}
+          update={(value) => this.toggleLinkAddress(value)}/>
     }
   }
 
@@ -149,7 +153,7 @@ export default class ContactForm extends Component {
       )
     }
   }
-  
+
   saveSocial(label) {
     const url = this.state.settings.social[label].url
     $.ajax({
@@ -165,11 +169,23 @@ export default class ContactForm extends Component {
       }
     })
   }
-  
+
   setActive(tab) {
     this.setState({active: tab})
   }
   
+  toggleLinkAddress(value) {
+    this.update('linkSupport', value ? '1' : '0')
+    $.ajax({
+      url: 'contact/admin/email',
+      data: {value},
+      dataType: 'json',
+      type: 'post',
+      success: ()=>{},
+      error: ()=>{}
+    })
+  }
+
   update(param, e) {
     const {settings} = this.state
     let value

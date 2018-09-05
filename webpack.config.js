@@ -6,10 +6,10 @@ module.exports = (env, argv) => {
   const inProduction = argv.mode === 'production'
   const inDevelopment = argv.mode === 'development'
   const settings = {
-    entry: './javascript/src/index.js',
+    entry: {form: './javascript/src/index.js', email: './javascript/src/Email.js'},
     output: {
       path: path.resolve(__dirname, 'javascript/dev'),
-      filename: 'index.js'
+      filename: '[name].js'
     },
     resolve: {
       extensions: ['.js', '.jsx',]
@@ -55,7 +55,7 @@ module.exports = (env, argv) => {
     settings.plugins.push(new UglifyJsPlugin({extractComments: true}))
     settings.output = {
       path: path.resolve(__dirname, 'javascript/build'),
-      filename: 'index.js'
+      filename: '[name].js'
     }
   }
 

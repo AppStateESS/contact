@@ -4,8 +4,17 @@ namespace contact\Factory;
 
 use contact\Resource\ContactInfo\PhysicalAddress;
 use contact\Factory;
+use phpws2\Template;
 
-require_once PHPWS_SOURCE_DIR . 'mod/contact/config/defines.php';
+if (is_file(PHPWS_SOURCE_DIR . 'mod/contact/config/defines.php')) {
+    require_once PHPWS_SOURCE_DIR . 'mod/contact/config/defines.php';
+} else {
+    require_once PHPWS_SOURCE_DIR . 'mod/contact/config/defines.dist.php';
+}
+require_once PHPWS_SOURCE_DIR . 'javascript/captcha/recaptcha/recaptcha_settings.php';
+
+// Never run in production
+// require_once PHPWS_SOURCE_DIR . 'mod/contact/class/FakeSwiftMailer.php';
 
 /**
  * @license http://opensource.org/licenses/lgpl-3.0.html
@@ -24,14 +33,35 @@ class ContactInfo
 EOF;
         \Layout::addJSHeader($settings);
         if (CONTACT_SCRIPT_PRODUCTION) {
-            $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/build/index.js';
+            $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/build/form.js';
         } else {
-            $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/dev/index.js';
+            $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/dev/form.js';
         }
         \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>");
         return <<<EOF
 <div id="contact-form"></div>
 EOF;
+    }
+
+    public static function emailChoice()
+    {
+        if (CONTACT_SCRIPT_PRODUCTION) {
+            $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/build/email.js';
+        } else {
+            $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/dev/email.js';
+        }
+        self::addEmailModal();
+        \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>");
+    }
+
+    private static function addEmailModal()
+    {
+        $vars['site_key'] = RECAPTCHA_PUBLIC_KEY;
+        $vars['captcha'] = javascript('captcha/recaptcha');
+        $template = new \phpws2\Template($vars);
+        $template->setModuleTemplate('contact', 'email.html');
+        $content = $template->get();
+        \Layout::add($content);
     }
 
     public static function load()
@@ -68,7 +98,6 @@ EOF;
             $values['formatted_fax_number'] = $contact_info->getFaxNumber(true);
         }
 
-        
         $values['front_only'] = $contact_info->getFrontOnly();
         $values['site_contact_name'] = $contact_info->getSiteContactName();
         $values['site_contact_email'] = $contact_info->getSiteContactEmail();
@@ -83,11 +112,14 @@ EOF;
         $values['dimensions'] = "{$x}x{$y}";
         $lat = \phpws2\Settings::get('contact', 'latitude');
         $long = \phpws2\Settings::get('contact', 'longitude');
+
         $values['latitude'] = $lat;
         $values['longitude'] = $long;
         $values['openmap_link'] = ContactInfo\Map::getOpenStreetMapUrl($lat,
                         $long);
         $values['google_link'] = ContactInfo\Map::getGoogleMapUrl($lat, $long);
+        $values['linkSupport'] = \phpws2\Settings::get('contact', 'linkSupport');
+        $values['emailForm'] = \phpws2\Settings::get('contact', 'emailForm');
 
         $physical_address = $contact_info->getPhysicalAddress();
         $map = $contact_info->getMap();
@@ -123,6 +155,7 @@ EOF;
         $contact_info->setSiteContactEmail($values['site_contact_email']);
         $contact_info->setOtherInformation($values['other_information']);
         $contact_info->setFrontOnly($values['front_only']);
+        $contact_info->setLinkSupport($value['linkSupport']);
         self::save($contact_info);
 
         $physical_address = $contact_info->getPhysicalAddress();
@@ -182,6 +215,75 @@ EOF;
         $template->setModuleTemplate('contact', 'view.html');
         $content = $template->get();
         return $content;
+    }
+
+    private static function testCaptcha(\Canopy\Request $request)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl,
+                array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'https://www.google.com/recaptcha/api/siteverify',
+            CURLOPT_POST => 1,
+            CURLOPT_POSTFIELDS => array(
+                'secret' => RECAPTCHA_PRIVATE_KEY,
+                'response' => $request->pullPostString('captchaKey')
+            )
+        ));
+
+        $resp = curl_exec($curl);
+        curl_close($curl);
+
+        $result = json_decode($resp);
+        return $result->success;
+    }
+
+    public static function postEmail(\Canopy\Request $request)
+    {
+        $success = true;
+        $resultMessage = '';
+
+        $name = $request->pullPostString('name');
+        $email = $request->pullPostString('email');
+        $subject = substr($request->pullPostString('subject'), 0, 255);
+        $message = substr($request->pullPostString('message'), 0, 1000);
+        $toAddress = $request->pullPostString('toAddress');
+
+        try {
+            $emailObj = new \phpws2\Variable\Email($email);
+
+            if (empty($name) || empty($email) || empty($subject) || empty($message)) {
+                $success = false;
+                $resultMessage = 'Some fields were incomplete.';
+            } elseif (!self::testCaptcha($request)) {
+                $success = false;
+                $resultMessage = 'ReCaptcha failed.';
+            }
+        } catch (\Exception $e) {
+            $success = false;
+            $resultMessage = 'Check your email address.';
+        }
+
+        if ($success) {
+            self::sendEmail($toAddress, $name, $email, $subject, $message);
+        }
+
+        return ['success' => $success, 'message' => $resultMessage];
+    }
+
+    private static function sendEmail($toAddress, $name, $email, $subject,
+            $content)
+    {
+        $siteTitle = \Layout::getPageTitle(true);
+        $subject = "Via website $siteTitle - $subject";
+        $transport = new \Swift_SendmailTransport(SWIFT_MAIL_TRANSPORT_PARAMETER);
+        $message = \Swift_Message::newInstance();
+        $message->setSubject($subject);
+        $message->setFrom([$email => $name]);
+        $message->setTo($toAddress);
+        $message->setBody($content, 'text/html');
+        $mailer = new \Swift_Mailer($transport);
+        $mailer->send($message);
     }
 
 }

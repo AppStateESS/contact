@@ -50,7 +50,7 @@ EOF;
 </pre>
 EOF;
 
-            case version_compare($currentVersion, '1.3.0', '<'):
+        case version_compare($currentVersion, '1.3.0', '<'):
             $content[] = <<<EOF
 <pre>
 1.3.0
@@ -58,7 +58,7 @@ EOF;
 + Rewritten in React to use new maps.
 </pre>
 EOF;
-            case version_compare($currentVersion, '1.3.1', '<'):
+        case version_compare($currentVersion, '1.3.1', '<'):
             $content[] = <<<EOF
 <pre>
 1.3.1
@@ -66,7 +66,7 @@ EOF;
 + Removed unused code.
 </pre>
 EOF;
-            case version_compare($currentVersion, '1.3.2', '<'):
+        case version_compare($currentVersion, '1.3.2', '<'):
             $content[] = <<<EOF
 <pre>
 1.3.2
@@ -74,7 +74,17 @@ EOF;
 + Fixed email address printing.
 </pre>
 EOF;
-            case version_compare($currentVersion, '1.4.0', '<'):
+        case version_compare($currentVersion, '1.4.0', '<'):
+            $content[] = <<<EOF
+<pre>
+1.4.0
+-----------
++ Bug fixes with display
++ Can set thumbnail by lat/long.
+</pre>
+EOF;
+
+        case version_compare($currentVersion, '1.5.0', '<'):
             $content[] = <<<EOF
 <pre>
 1.4.0
@@ -87,4 +97,5 @@ EOF;
             return true;
     }
 }
+
 ?>

@@ -37,6 +37,10 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
                         $social = new \contact\Controller\Social($this);
                         return $social;
 
+                    case 'email':
+                        $email = new \contact\Controller\Email($this);
+                        return $email;
+
                     case 'contactinfo':
                     default:
                         $contact_info = new \contact\Controller\ContactInfo($this);
@@ -53,6 +57,9 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
 
     public function runTime(\Canopy\Request $request)
     {
+        if (\phpws2\Settings::get('contact', 'linkSupport')) {
+            Factory\ContactInfo::emailChoice();
+        }
         Factory\ContactInfo::showSiteContact();
         $frontOnly = \phpws2\Settings::get('contact', 'front_only');
         if ($frontOnly && !\phpws\PHPWS_Core::atHome()) {
@@ -96,11 +103,14 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
         $settings['longitude'] = null;
         $settings['full_map_link'] = null;
         $settings['pitch'] = 60;
-
         $settings['zoom'] = 18;
         $settings['dimension_x'] = '300';
         $settings['dimension_y'] = '200';
-        
+
+        // Email
+        $settings['linkSupport'] = false;
+
+        // Display
         $settings['front_only'] = false;
 
         return $settings;

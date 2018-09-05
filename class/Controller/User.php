@@ -29,6 +29,8 @@ use contact\Resource;
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
  */
+require_once PHPWS_SOURCE_DIR . 'javascript/captcha/recaptcha/recaptcha_settings.php';
+
 class User extends \phpws2\Http\Controller
 {
 
@@ -48,6 +50,14 @@ class User extends \phpws2\Http\Controller
         }
         $view = new \phpws2\View\HtmlView($content);
         return $view;
+    }
+
+    public function post(\Canopy\Request $request)
+    {
+        $result = Factory::postEmail($request);
+        $view = new \phpws2\View\JsonView($result);
+        $response = new \Canopy\Response($view);
+        return $response;
     }
 
 }

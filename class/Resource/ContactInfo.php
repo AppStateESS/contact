@@ -53,6 +53,8 @@ class ContactInfo extends \phpws2\Resource
     private $other_information;
     
     private $front_only;
+    
+    private $linkSupport;
 
     public function __construct()
     {
@@ -71,6 +73,7 @@ class ContactInfo extends \phpws2\Resource
         $this->other_information = new \phpws2\Variable\StringVar(null, 'other_information');
         $this->other_information->allowNull(true);
         $this->front_only = new \phpws2\Variable\BooleanVar(0, 'front_only');
+        $this->linkSupport = new \phpws2\Variable\BooleanVar(1, 'linkSupport');
     }
 
     /**
@@ -122,6 +125,16 @@ class ContactInfo extends \phpws2\Resource
             return $fax_number;
         }
         return '(' . substr($fax_number, 0, 3) . ') ' . substr($fax_number, 3, 3) . '-' . substr($fax_number, 6, 4);
+    }
+    
+    public function setLinkSupport($ls)
+    {
+        $this->linkSupport->set($ls);
+    }
+    
+    public function getLinkSupport()
+    {
+        return $this->linkSupport->get();
     }
 
     public function setFaxNumber($fax)
