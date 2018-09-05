@@ -87,10 +87,9 @@ EOF;
         case version_compare($currentVersion, '1.5.0', '<'):
             $content[] = <<<EOF
 <pre>
-1.4.0
+1.5.0
 -----------
-+ Bug fixes with display
-+ Can set thumbnail by lat/long.
++ Added alternate email link support.
 </pre>
 EOF;
 
