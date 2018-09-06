@@ -92,6 +92,14 @@ EOF;
 + Added alternate email link support.
 </pre>
 EOF;
+        case version_compare($currentVersion, '1.5.1', '<'):
+            $content[] = <<<EOF
+<pre>
+1.5.1
+-----------
++ Fixed error with unused setting.
+</pre>
+EOF;
 
             return true;
     }
