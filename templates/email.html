@@ -1,5 +1,6 @@
 <script>
   let captchaKey = null
+  const siteTitle = "<?=$siteTitle?>"
   function allowSubmit(key) {
     $('#send-message').attr('disabled', false)
     captchaKey = key
@@ -17,16 +18,16 @@
       <div class="modal-body">
         <div class="text-center">
           <p class="lead">Send an email to <strong><span id="contact-to-address"></span></strong> with:</p>
-          <div><a class="btn btn-outline-primary" href="" id="google-email-link" target="_blank">Google</a>
-            <a class="btn btn-outline-primary" href="" id="outlook-email-link" target="_blank">Outlook</a>
-            <a class="btn btn-outline-primary" href="" id="yahoo-email-link" target="_blank">Yahoo</a>
-            <a class="btn btn-outline-primary" href="" id="local-email-link" target="_blank">your email app</a></div>
+          <div><a class="btn btn-outline-primary contact-offsite-email" href="" id="google-email-link" target="_blank">Google</a>
+            <a class="btn btn-outline-primary contact-offsite-email" href="" id="outlook-email-link" target="_blank">Outlook</a>
+            <a class="btn btn-outline-primary contact-offsite-email" href="" id="yahoo-email-link" target="_blank">Yahoo</a>
+            <a class="btn btn-outline-primary contact-offsite-email" href="" id="local-email-link" target="_blank">your email app</a></div>
         </div>
         <hr />
-        <div class="alert alert-danger" style="display:none" id="contact-form-error"></div>
         <div class="alert alert-success text-center" style="display:none" id="contact-form-success">Message sent successfully. <button data-dismiss="modal" type="button" class="btn btn-outline-success btn-sm">Close</button></div>
+        <div class="alert alert-danger" style="display:none" id="contact-form-error"></div>
         <form method="post" action="./contact/user/send" id="email-contact-form">
-          <p class="alert alert-success text-center"><strong>Or use the contact form below:</strong></p>
+          <h4 class="text-primary text-center"><strong>Or use the contact form below:</strong></h4>
           <input type="hidden" name="to_address" value=""/>
           <div class="row">
             <div class="col-sm-6 mb-3">
