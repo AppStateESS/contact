@@ -58,6 +58,7 @@ EOF;
     {
         $vars['site_key'] = RECAPTCHA_PUBLIC_KEY;
         $vars['captcha'] = javascript('captcha/recaptcha');
+        $vars['siteTitle'] = \Layout::getPageTitle(true);
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('contact', 'email.html');
         $content = $template->get();
@@ -275,7 +276,7 @@ EOF;
             $content)
     {
         $siteTitle = \Layout::getPageTitle(true);
-        $subject = "Via website $siteTitle - $subject";
+        $subject = "From $siteTitle website: $subject";
         $transport = new \Swift_SendmailTransport(SWIFT_MAIL_TRANSPORT_PARAMETER);
         $message = \Swift_Message::newInstance();
         $message->setSubject($subject);
