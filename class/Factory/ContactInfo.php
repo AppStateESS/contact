@@ -120,7 +120,6 @@ EOF;
                         $long);
         $values['google_link'] = ContactInfo\Map::getGoogleMapUrl($lat, $long);
         $values['linkSupport'] = \phpws2\Settings::get('contact', 'linkSupport');
-        $values['emailForm'] = \phpws2\Settings::get('contact', 'emailForm');
 
         $physical_address = $contact_info->getPhysicalAddress();
         $map = $contact_info->getMap();
