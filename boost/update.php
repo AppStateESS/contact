@@ -100,6 +100,14 @@ EOF;
 + Fixed error with unused setting.
 </pre>
 EOF;
+        case version_compare($currentVersion, '1.5.2', '<'):
+            $content[] = <<<EOF
+<pre>
+1.5.2
+-----------
++ Fixed error with typo.
+</pre>
+EOF;
 
             return true;
     }

@@ -1,6 +1,6 @@
 {
   "name": "contact",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "description": "Add contact information to Canopy page",
   "scripts": {
     "dev": "webpack --mode development --config webpack.config.js --watch",
