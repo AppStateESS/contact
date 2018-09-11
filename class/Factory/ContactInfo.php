@@ -155,7 +155,7 @@ EOF;
         $contact_info->setSiteContactEmail($values['site_contact_email']);
         $contact_info->setOtherInformation($values['other_information']);
         $contact_info->setFrontOnly($values['front_only']);
-        $contact_info->setLinkSupport($value['linkSupport']);
+        $contact_info->setLinkSupport($values['linkSupport']);
         self::save($contact_info);
 
         $physical_address = $contact_info->getPhysicalAddress();
