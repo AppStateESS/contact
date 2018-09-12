@@ -32,7 +32,7 @@ const emailForm = () => {
 
   $('a[href^="mailto"]').click((e) => {
     e.preventDefault()
-    const emailUri = e.target.href.replace(/^mailto:/, '')
+    const emailUri = e.currentTarget.href.replace(/^mailto:/, '')
     const otherInfo = emailUri.split('?')
     emailAddress = emailUri
     //let subject = 'Website contact: ' + siteTitle

@@ -1,6 +1,6 @@
 {
   "name": "contact",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Add contact information to Canopy page",
   "scripts": {
     "dev": "webpack --mode development --config webpack.config.js --watch",
@@ -26,7 +26,7 @@
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
-    "browser-sync": "^2.24.6",
+    "browser-sync": "^2.24.7",
     "browser-sync-webpack-plugin": "^2.2.2",
     "canopy-react-bigcheckbox": "^0.1.9",
     "canopy-react-inputfield": "^0.1.7",

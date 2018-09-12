@@ -108,6 +108,14 @@ EOF;
 + Fixed error with typo.
 </pre>
 EOF;
+        case version_compare($currentVersion, '1.5.3', '<'):
+            $content[] = <<<EOF
+<pre>
+1.5.3
+-----------
++ Fixed bug with clicking email icons.
+</pre>
+EOF;
 
             return true;
     }
