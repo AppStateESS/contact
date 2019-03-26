@@ -202,12 +202,6 @@ EOF;
 
     public static function display()
     {
-        $building = \phpws2\Settings::get('contact', 'building');
-
-        if (empty($building)) {
-            return;
-        }
-
         $contact_info = self::load();
         $values = self::getValues($contact_info, true);
 

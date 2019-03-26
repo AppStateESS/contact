@@ -18,10 +18,10 @@ export default class ContactForm extends Component {
       active: 'contact',
       errors: {
         building: false,
-        phone_number: false,
+        phone_number: false
       },
       message: null,
-      messageType: 'success',
+      messageType: 'success'
     }
     this.tabs = [
       {
@@ -36,8 +36,7 @@ export default class ContactForm extends Component {
       }, {
         label: 'Email',
         name: 'email'
-      },
-
+      }
     ]
   }
 
@@ -57,14 +56,7 @@ export default class ContactForm extends Component {
   checkSettings() {
     let saveAllowed = true
     const errors = this.state.errors
-    const {building, site_contact_email, site_contact_name} = this.state.settings
-
-    if (building === null || building.length === 0) {
-      saveAllowed = false
-      errors.building = true
-    } else {
-      errors.building = false
-    }
+    const {site_contact_email, site_contact_name} = this.state.settings
 
     if ((site_contact_email !== null && site_contact_email.length > 0) && (site_contact_name === null || site_contact_name.length === 0)) {
       saveAllowed = false
@@ -76,7 +68,7 @@ export default class ContactForm extends Component {
     this.setState({errors})
     return saveAllowed
   }
-  
+
   getForm() {
     switch (this.state.active) {
       case 'contact':
@@ -139,17 +131,17 @@ export default class ContactForm extends Component {
         dataType: 'json',
         type: 'post',
         success: () => {
-          this.setState({message: 'Settings saved', messageType: 'success',})
+          this.setState({message: 'Settings saved', messageType: 'success'})
           window.scrollTo(0, 0)
         },
         error: () => {
-          this.setState({message: 'Error: Could not save', messageType: 'danger',})
-        },
+          this.setState({message: 'Error: Could not save', messageType: 'danger'})
+        }
       })
     } else {
       window.scrollTo(0, 0)
       this.setState(
-        {message: 'Error: make sure required information is filled out', messageType: 'danger',}
+        {message: 'Error: make sure required information is filled out', messageType: 'danger'}
       )
     }
   }
@@ -160,7 +152,7 @@ export default class ContactForm extends Component {
       url: 'contact/admin/social',
       data: {
         label,
-        url,
+        url
       },
       dataType: 'json',
       type: 'post',
@@ -173,16 +165,23 @@ export default class ContactForm extends Component {
   setActive(tab) {
     this.setState({active: tab})
   }
-  
+
   toggleLinkAddress(value) {
-    this.update('linkSupport', value ? '1' : '0')
+    this.update(
+      'linkSupport',
+      value
+        ? '1'
+        : '0'
+    )
     $.ajax({
       url: 'contact/admin/email',
-      data: {value},
+      data: {
+        value
+      },
       dataType: 'json',
       type: 'post',
-      success: ()=>{},
-      error: ()=>{}
+      success: () => {},
+      error: () => {}
     })
   }
 

@@ -21,10 +21,6 @@ const ContactInfo = ({settings, update, save, errors,}) => {
                 name="building"
                 label="Building"
                 value={settings.building}
-                required={true}
-                errorMessage={errors.building === true
-                  ? 'Building may not be empty'
-                  : null}
                 classes="mb-3"
                 change={(e) => update('building', e)}/>
             </div>
