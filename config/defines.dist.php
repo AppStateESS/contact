@@ -2,7 +2,7 @@
 
 /**
  * MIT License
- * Copyright (c) 2018 Electronic Student Services @ Appalachian State University
+ * Copyright (c) 2019 Electronic Student Services @ Appalachian State University
  * 
  * See LICENSE file in root directory for copyright and distribution permissions.
  * 
@@ -14,10 +14,14 @@ define('CONTACT_SCRIPT_PRODUCTION', true);
 
 // 1 : smtp
 // 2 : sendmail
-define('SWIFT_MAIL_TRANSPORT_TYPE', 2);
+if (!defined('SWIFT_MAIL_TRANSPORT_TYPE')) {
+    define('SWIFT_MAIL_TRANSPORT_TYPE', 2);
+}
 
 // depends on the choice above
 // 1 : server location
 // 2 : location of sendmail
 // http://swiftmailer.org/docs/sending.html
-define('SWIFT_MAIL_TRANSPORT_PARAMETER', 'localhost');
+if (!defined('SWIFT_MAIL_TRANSPORT_PARAMETER')) {
+    define('SWIFT_MAIL_TRANSPORT_PARAMETER', '/usr/sbin/sendmail -bs');
+}
