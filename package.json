@@ -1,6 +1,6 @@
 {
   "name": "contact",
-  "version": "1.6.0",
+  "version": "1.5.4",
   "description": "Add contact information to Canopy page",
   "scripts": {
     "dev": "webpack --mode development --watch",
@@ -44,5 +44,11 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.17",
+    "@fortawesome/free-brands-svg-icons": "^5.8.1",
+    "@fortawesome/free-regular-svg-icons": "^5.8.1",
+    "@fortawesome/free-solid-svg-icons": "^5.8.1"
   }
 }

@@ -1,6 +1,10 @@
 'use strict'
 import React from 'react'
 import PropTypes from 'prop-types'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {fas} from '@fortawesome/free-solid-svg-icons'
+import {fab} from '@fortawesome/free-brands-svg-icons'
+import {far} from '@fortawesome/free-regular-svg-icons'
 
 const SocialForm = ({social, saveUrl, update, clearUrl}) => {
   let url = ''
@@ -10,7 +14,7 @@ const SocialForm = ({social, saveUrl, update, clearUrl}) => {
   
   return (
     <div>
-      <h3><i className={social.icon}></i>&nbsp;{social.title}</h3>
+      <h3><FontAwesomeIcon icon={social.fa} />&nbsp;{social.title}</h3>
       <div className="input-group">
         <div className="input-group-prepend"><span className="input-group-text">{social.prefix}</span></div>
         <input type="text" className="form-control" value={url} onChange={update} placeholder="Type or paste in a web address, phone number, email address, etc."/>
