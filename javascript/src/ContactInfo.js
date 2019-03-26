@@ -1,9 +1,9 @@
 'use strict'
 import React from 'react'
 import PropTypes from 'prop-types'
-import InputField from 'canopy-react-inputfield'
+import InputField from '@essappstate/canopy-react-inputfield'
 import State from './State'
-import BigCheckbox from 'canopy-react-bigcheckbox'
+import BigCheckbox from '@essappstate/canopy-react-bigcheckbox'
 
 const ContactInfo = ({settings, update, save, errors,}) => {
   return (

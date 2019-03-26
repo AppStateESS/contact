@@ -1,8 +1,8 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from 'canopy-react-inputfield'
-import BigCheckbox from 'canopy-react-bigcheckbox'
+import InputField from '@essappstate/canopy-react-inputfield'
+import BigCheckbox from '@essappstate/canopy-react-bigcheckbox'
 import {states} from './stateList'
 
 /* global $ */

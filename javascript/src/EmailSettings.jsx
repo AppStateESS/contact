@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import BigCheckbox from 'canopy-react-bigcheckbox'
+import BigCheckbox from '@essappstate/canopy-react-bigcheckbox'
 
 export default class EmailSettings extends Component {
   constructor(props) {

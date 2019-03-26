@@ -1,18 +1,41 @@
 /* globals __dirname, module */
 const webpack = require('webpack')
 const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = (env, argv) => {
   const inProduction = argv.mode === 'production'
   const inDevelopment = argv.mode === 'development'
   const settings = {
-    entry: {form: './javascript/src/index.js', email: './javascript/src/Email.js'},
+    entry: {
+      form: './javascript/src/index.js',
+      email: './javascript/src/Email.js'
+    },
     output: {
       path: path.resolve(__dirname, 'javascript/dev'),
       filename: '[name].js'
     },
     resolve: {
-      extensions: ['.js', '.jsx',]
+      extensions: ['.js', '.jsx']
+    },
+    externals: {
+      $: 'jQuery',
+      jquery: 'jQuery'
+    },
+    optimization: {
+      minimizer: [new TerserPlugin()],
+      splitChunks: {
+        minChunks: 3,
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            minChunks: 3,
+            name: 'vendor',
+            enforce: true,
+            chunks: 'all'
+          }
+        }
+      }
     },
     plugins: [],
     module: {
@@ -22,15 +45,15 @@ module.exports = (env, argv) => {
           include: path.resolve(__dirname, 'javascript/src'),
           loader: 'babel-loader',
           query: {
-            presets: ['env', 'react',]
-          },
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
         }, {
           test: /\.(png|woff|woff2|eot|ttf|svg)$/,
           loader: 'url-loader?limit=100000'
         }, {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader',]
-        },
+          use: ['style-loader', 'css-loader']
+        }
       ]
     }
   }
@@ -48,11 +71,10 @@ module.exports = (env, argv) => {
     // require('webpack-bundle-analyzer').BundleAnalyzerPlugin
     // settings.plugins.push(new BundleAnalyzerPlugin())
 
-    const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-    settings.plugins.push(
-      new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify('production')})
+    new webpack.DefinePlugin(
+      {'process.env.NODE_ENV': JSON.stringify('production')}
     )
-    settings.plugins.push(new UglifyJsPlugin({extractComments: true}))
+
     settings.output = {
       path: path.resolve(__dirname, 'javascript/build'),
       filename: '[name].js'
