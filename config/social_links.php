@@ -3,6 +3,7 @@
 /**
  * Social link types
  */
+
 $social_links['email']['title'] = 'Email';
 $social_links['email']['icon'] = 'far fa-envelope';
 $social_links['email']['prefix'] = 'mailto:';
@@ -10,6 +11,10 @@ $social_links['email']['prefix'] = 'mailto:';
 $social_links['phone']['title'] = 'Phone';
 $social_links['phone']['icon'] = 'fas fa-phone';
 $social_links['phone']['prefix'] = 'tel:+1';
+
+$social_links['calendar']['title'] = 'Calendar';
+$social_links['calendar']['icon'] = 'fas fa-calendar';
+$social_links['calendar']['prefix'] = 'http://';
 
 $social_links['bitbucket']['title'] = 'Bitbucket';
 $social_links['bitbucket']['icon'] = 'fab fa-bitbucket';
