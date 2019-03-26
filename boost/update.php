@@ -117,6 +117,18 @@ EOF;
 </pre>
 EOF;
 
+        case version_compare($currentVersion, '1.5.4', '<'):
+            $content[] = <<<EOF
+<pre>
+1.5.4
+-----------
++ Added calendar icon.
++ Building no longer required.
++ Fixed social icon refresh menu.
++ Updated npm.
+</pre>
+EOF;
+
             return true;
     }
 }
