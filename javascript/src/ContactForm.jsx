@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Navs from 'canopy-react-navs'
+import Navs from '@essappstate/canopy-react-navs'
 import ContactInfo from './ContactInfo'
 import Map from './Map'
 import SocialIcons from './SocialIcons'
