@@ -22,8 +22,13 @@ class Map extends Component {
 
   componentDidMount() {
     const {street, city, state, zip,} = this.props.settings
-    const thumbAllowed = (street.length > 0 && city.length > 0 && state.length > 0)
-    const fullAddress = `${street}, ${city}, ${state}, ${zip}`
+    const thumbAllowed = (street !== null && street.length > 0 && city.length > 0 && state.length > 0)
+    let fullAddress
+    if (thumbAllowed) {
+      fullAddress = `${street}, ${city}, ${state}, ${zip}`
+    } else {
+      fullAddress = 'Missing street, city, state, and/or zip'
+    }
     const {latitude, longitude,} = this.props.settings
 
     this.setState({
@@ -59,7 +64,7 @@ class Map extends Component {
             value={this.state.accessToken}
             change={(e) => this.setState({'accessToken': e.target.value})}/>
           <p>Maps require a&nbsp;
-            <a href="https://www.mapbox.com/account/access-tokens" target="_blank">MapBox Access Token</a>. Create an account and paste the access code above.
+            <a href="https://www.mapbox.com/account/access-tokens" target="_index">MapBox Access Token</a>. Create an account and paste the access code above.
           </p>
           <button className="btn btn-primary" onClick={() => this.saveAccessToken()}>Save access token</button>
         </div>
@@ -142,7 +147,6 @@ class Map extends Component {
       getThumbnailButton = <button className="btn btn-info mr-2" onClick={() => this.getThumbnail()}>Refresh GPS</button>
       clearThumbnailButton = <button className="btn btn-danger" onClick={() => this.dropThumbnail()}>Remove thumbnail</button>
     }
-
     return (
       <div>
         <div className="row mb-2">
@@ -161,7 +165,7 @@ class Map extends Component {
                       <input
                         type="radio"
                         name="dimensions"
-                        value="300x200"
+                        defaultValue="300x200"
                         checked={this.props.settings.dimensions === '300x200'}
                         onChange={() => this.props.update('dimensions', '300x200')}/>
                       <span>300x200</span>
@@ -172,7 +176,7 @@ class Map extends Component {
                       <input
                         type="radio"
                         name="dimensions"
-                        value="300x300"
+                        defaultValue="300x300"
                         checked={this.props.settings.dimensions === '300x300'}
                         onChange={() => this.props.update('dimensions', '300x300')}/>
                       <span>300x300</span>
@@ -223,7 +227,7 @@ class Map extends Component {
             </div>
           </div>
           <div className="col-sm-6">
-            <div className="mb-2"><a href={`https://www.openstreetmap.org/#map=16/${this.state.latitude}/${this.state.longitude}`} target="_blank">{thumbnail}</a></div>
+            <div className="mb-2"><a href={`https://www.openstreetmap.org/#map=16/${this.state.latitude}/${this.state.longitude}`} target="_index">{thumbnail}</a></div>
             {clearThumbnailButton}
           </div>
         </div>
