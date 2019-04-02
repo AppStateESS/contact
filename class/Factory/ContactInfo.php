@@ -204,11 +204,26 @@ EOF;
     {
         $contact_info = self::load();
         $values = self::getValues($contact_info, true);
+        if (!self::dataToDisplay($values)) {
+            return;
+        }
 
         $template = new \phpws2\Template($values);
         $template->setModuleTemplate('contact', 'view.html');
         $content = $template->get();
         return $content;
+    }
+
+    private static function dataToDisplay($values)
+    {
+        return !empty($values['phone_number']) ||
+                !empty($values['fax_number']) ||
+                !empty($values['email']) ||
+                !empty($values['other_information']) ||
+                !empty($values['thumbnail_map']) ||
+                !empty($values['building']) ||
+                !empty($values['street']) ||
+                !empty($values['post_box']);
     }
 
     private static function testCaptcha(\Canopy\Request $request)
