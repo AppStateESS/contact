@@ -128,14 +128,22 @@ EOF;
 + Updated npm.
 </pre>
 EOF;
-            
-                    case version_compare($currentVersion, '1.5.5', '<'):
+
+        case version_compare($currentVersion, '1.5.5', '<'):
             $content[] = <<<EOF
 <pre>
 1.5.5
 -----------
 + Contact header does not show if there isn't any data.
 + Fixed #11: Map tab broken if no content has been entered.
+</pre>
+EOF;
+        case version_compare($currentVersion, '1.5.6', '<'):
+            $content[] = <<<EOF
+<pre>
+1.5.6
+-----------
++ AppSync added
 </pre>
 EOF;
 
