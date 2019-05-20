@@ -19,6 +19,11 @@ $social_links['calendar']['icon'] = 'fas fa-calendar';
 $social_links['calendar']['fa'] = ['fas', 'calendar'];
 $social_links['calendar']['prefix'] = 'http://';
 
+$social_links['appsync']['title'] = 'AppSync';
+$social_links['appsync']['icon'] = 'fas fa-redo-alt';
+$social_links['appsync']['fa'] = ['fas', 'redo-alt'];
+$social_links['appsync']['prefix'] = 'http://';
+
 $social_links['bitbucket']['title'] = 'Bitbucket';
 $social_links['bitbucket']['icon'] = 'fab fa-bitbucket';
 $social_links['bitbucket']['fa'] = ['fab', 'bitbucket'];
