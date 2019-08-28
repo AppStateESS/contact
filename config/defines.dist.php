@@ -23,5 +23,5 @@ if (!defined('SWIFT_MAIL_TRANSPORT_TYPE')) {
 // 2 : location of sendmail
 // http://swiftmailer.org/docs/sending.html
 if (!defined('SWIFT_MAIL_TRANSPORT_PARAMETER')) {
-    define('SWIFT_MAIL_TRANSPORT_PARAMETER', '/usr/sbin/sendmail -bs');
+    define('SWIFT_MAIL_TRANSPORT_PARAMETER', '/usr/sbin/sendmail -t -i');
 }
