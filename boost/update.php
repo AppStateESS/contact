@@ -146,6 +146,14 @@ EOF;
 + AppSync added
 </pre>
 EOF;
+        case version_compare($currentVersion, '1.5.7', '<'):
+            $content[] = <<<EOF
+<pre>
+1.5.7
+-----------
++ Libraries updated
++ Updated default email parameter</pre>
+EOF;
 
             return true;
     }

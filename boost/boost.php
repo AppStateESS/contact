@@ -5,7 +5,7 @@
  */
 
 $proper_name  = 'Contact';
-$version      = '1.5.6';
+$version      = '1.5.7';
 $version_http = null;
 $import_sql   = false;
 $about        = false;
