@@ -154,6 +154,13 @@ EOF;
 + Libraries updated
 + Updated default email parameter</pre>
 EOF;
+        case version_compare($currentVersion, '1.5.8', '<'):
+            $content[] = <<<EOF
+<pre>
+1.5.8
+-----------
++ NPM update</pre>
+EOF;
 
             return true;
     }

@@ -1,6 +1,6 @@
 {
   "name": "contact",
-  "version": "1.5.7",
+  "version": "1.5.8",
   "description": "Add contact information to Canopy page",
   "scripts": {
     "dev": "webpack --mode development --watch",
@@ -22,33 +22,33 @@
   },
   "homepage": "https://github.com/AppStateESS/contact#readme",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
     "@essappstate/canopy-react-bigcheckbox": "^0.2.1",
     "@essappstate/canopy-react-inputfield": "^0.2.1",
     "@essappstate/canopy-react-navs": "^0.2.1",
-    "@fortawesome/react-fontawesome": "^0.1.4",
-    "babel-loader": "^8.0.6",
+    "@fortawesome/react-fontawesome": "^0.1.9",
+    "babel-loader": "^8.1.0",
     "browser-sync": "^2.26.7",
     "browser-sync-webpack-plugin": "^2.2.2",
     "css-loader": "^2.1.1",
     "es6-promise": "^4.2.8",
     "file-loader": "^3.0.1",
-    "leaflet": "^1.5.1",
+    "leaflet": "^1.6.0",
     "mapbox": "^1.0.0-beta10",
     "prop-types": "^15.7.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7"
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.22",
-    "@fortawesome/free-brands-svg-icons": "^5.10.2",
-    "@fortawesome/free-regular-svg-icons": "^5.10.2",
-    "@fortawesome/free-solid-svg-icons": "^5.10.2"
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
+    "@fortawesome/free-brands-svg-icons": "^5.13.0",
+    "@fortawesome/free-regular-svg-icons": "^5.13.0",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0"
   }
 }

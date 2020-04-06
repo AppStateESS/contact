@@ -3,11 +3,10 @@
 /**
  * @author Matthew McNaney <mcnaney at gmail dot com>
  */
-
-$proper_name  = 'Contact';
-$version      = '1.5.7';
+$proper_name = 'Contact';
+$version = '1.5.8';
 $version_http = null;
-$import_sql   = false;
-$about        = false;
-$dependency   = false;
-$image_dir    = true;
+$import_sql = false;
+$about = false;
+$dependency = false;
+$image_dir = true;
