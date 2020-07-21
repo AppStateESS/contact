@@ -161,6 +161,13 @@ EOF;
 -----------
 + NPM update</pre>
 EOF;
+        case version_compare($currentVersion, '1.5.9', '<'):
+            $content[] = <<<EOF
+<pre>
+1.5.9
+-----------
++ NPM update</pre>
+EOF;
 
             return true;
     }
