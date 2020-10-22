@@ -1,25 +1,18 @@
-language: ruby
-jobs:
-  include:
-    - language: php
-      php: 7
-      script:
-        - '.travis-build/phplint .'
-
-    - language: node_js
-      node_js: '10.20.1'
-      before_install:
-        - npm i -g npm@v6.14.8
-      install:
-        - npm install
-      after_success:
-        - npm run build
-        - rm -rf node_modules
-        - tar -czf contact.tar.gz *
-
 os:
   - linux
 dist: xenial
+language: php
+php:
+  - 7
+install:
+  - nvm install 10
+  - npm install
+script:
+  - '.travis-build/phplint .'
+after_success:
+  - npm run build
+  - rm -rf node_modules
+  - tar -czf contact.tar.gz *
 deploy:
   provider: releases
   token:
