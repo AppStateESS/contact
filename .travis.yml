@@ -7,6 +7,12 @@ jobs:
         - '.travis-build/phplint .'
     - language: node_js
       node_js: '10.20.1'
+os:
+  - linux
+language:
+  - ruby
+dist:
+  - xenial
 before_install:
   - npm i -g npm@v6.14.8
 install:
