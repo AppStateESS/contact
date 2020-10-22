@@ -4,7 +4,7 @@
  * @author Matthew McNaney <mcnaney at gmail dot com>
  */
 $proper_name = 'Contact';
-$version = '1.5.9';
+$version = '1.5.10';
 $version_http = null;
 $import_sql = false;
 $about = false;
