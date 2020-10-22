@@ -9,21 +9,20 @@ module.exports = (env, argv) => {
   const settings = {
     entry: {
       form: './javascript/src/index.js',
-      email: './javascript/src/Email.js'
+      email: './javascript/src/Email.js',
     },
     output: {
       path: path.resolve(__dirname, 'javascript/dev'),
-      filename: '[name].js'
+      filename: '[name].js',
     },
     resolve: {
-      extensions: ['.js', '.jsx']
+      extensions: ['.js', '.jsx'],
     },
     externals: {
       $: 'jQuery',
-      jquery: 'jQuery'
+      jquery: 'jQuery',
     },
     optimization: {
-      minimizer: [new TerserPlugin()],
       splitChunks: {
         minChunks: 3,
         cacheGroups: {
@@ -32,10 +31,10 @@ module.exports = (env, argv) => {
             minChunks: 3,
             name: 'vendor',
             enforce: true,
-            chunks: 'all'
-          }
-        }
-      }
+            chunks: 'all',
+          },
+        },
+      },
     },
     plugins: [],
     module: {
@@ -43,26 +42,39 @@ module.exports = (env, argv) => {
         {
           test: /\.jsx?/,
           include: path.resolve(__dirname, 'javascript/src'),
-          loader: 'babel-loader',
-          query: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }, {
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env', '@babel/preset-react'],
+            },
+          },
+        },
+        {
           test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-          loader: 'url-loader?limit=100000'
-        }, {
+          use: {
+            loader: 'url-loader?limit=100000',
+          },
+        },
+        {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader']
-        }
-      ]
-    }
+          use: ['style-loader', 'css-loader'],
+        },
+      ],
+    },
   }
 
   if (inDevelopment) {
     const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
     settings.plugins.push(
-      new BrowserSyncPlugin({host: 'localhost', notify: false, port: 3000, files: ['./javascript/dev/*.js'], proxy: 'localhost/canopy'})
+      new BrowserSyncPlugin({
+        host: 'localhost',
+        notify: false,
+        port: 3000,
+        files: ['./javascript/dev/*.js'],
+        proxy: 'localhost/canopy',
+      })
     )
+
     settings.devtool = 'inline-source-map'
   }
 
@@ -71,13 +83,13 @@ module.exports = (env, argv) => {
     // require('webpack-bundle-analyzer').BundleAnalyzerPlugin
     // settings.plugins.push(new BundleAnalyzerPlugin())
 
-    new webpack.DefinePlugin(
-      {'process.env.NODE_ENV': JSON.stringify('production')}
-    )
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    })
 
     settings.output = {
       path: path.resolve(__dirname, 'javascript/build'),
-      filename: '[name].js'
+      filename: '[name].js',
     }
   }
 
