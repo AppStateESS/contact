@@ -3,14 +3,16 @@
 /**
  * MIT License
  * Copyright (c) 2019 Electronic Student Services @ Appalachian State University
- * 
+ *
  * See LICENSE file in root directory for copyright and distribution permissions.
- * 
+ *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
  * @license https://opensource.org/licenses/MIT
  */
-
 define('CONTACT_SCRIPT_PRODUCTION', true);
+
+define('CONTACT_GOOGLE_RECAPTCHA_KEY_PUBLIC', '');
+define('CONTACT_GOOGLE_RECAPTCHA_KEY_PRIVATE', '');
 
 // 1 : smtp
 // 2 : sendmail
@@ -25,3 +27,5 @@ if (!defined('SWIFT_MAIL_TRANSPORT_TYPE')) {
 if (!defined('SWIFT_MAIL_TRANSPORT_PARAMETER')) {
     define('SWIFT_MAIL_TRANSPORT_PARAMETER', '/usr/sbin/sendmail -t -i');
 }
+
+define('CONTACT_SWIFT_OLD_VERSION', true);
