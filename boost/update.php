@@ -175,6 +175,16 @@ EOF;
 -----------
 + NPM update</pre>
 EOF;
+        case version_compare($currentVersion, '1.6.0', '<'):
+            $content[] = <<<EOF
+<pre>
+1.6.0
+-----------
++ NPM update
++ Email fixes
++ Captcha update
+</pre>
+EOF;
 
             return true;
     }
