@@ -11,7 +11,6 @@ if (is_file(PHPWS_SOURCE_DIR . 'mod/contact/config/defines.php')) {
 } else {
     require_once PHPWS_SOURCE_DIR . 'mod/contact/config/defines.dist.php';
 }
-require_once PHPWS_SOURCE_DIR . 'javascript/captcha/recaptcha/recaptcha_settings.php';
 
 // Never run in production
 // require_once PHPWS_SOURCE_DIR . 'mod/contact/class/FakeSwiftMailer.php';
@@ -52,12 +51,12 @@ EOF;
         }
         self::addEmailModal();
         \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>");
+        \Layout::addJSHeader("<script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>");
     }
 
     private static function addEmailModal()
     {
-        $vars['site_key'] = RECAPTCHA_PUBLIC_KEY;
-        $vars['captcha'] = javascript('captcha/recaptcha');
+        $vars['site_key'] = CONTACT_GOOGLE_RECAPTCHA_KEY_PUBLIC;
         $vars['siteTitle'] = \Layout::getPageTitle(true);
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('contact', 'email.html');
@@ -69,18 +68,18 @@ EOF;
     {
         $contact_info = new \contact\Resource\ContactInfo;
         $contact_info->setPhoneNumber(\phpws2\Settings::get('contact',
-                        'phone_number'));
+                'phone_number'));
         $contact_info->setFaxNumber(\phpws2\Settings::get('contact',
-                        'fax_number'));
+                'fax_number'));
         $contact_info->setEmail(\phpws2\Settings::get('contact', 'email'));
         $contact_info->setSiteContactName(\phpws2\Settings::get('contact',
-                        'site_contact_name'));
+                'site_contact_name'));
         $contact_info->setSiteContactEmail(\phpws2\Settings::get('contact',
-                        'site_contact_email'));
+                'site_contact_email'));
         $contact_info->setOtherInformation(\phpws2\Settings::get('contact',
-                        'other_information'));
+                'other_information'));
         $contact_info->setFrontOnly(\phpws2\Settings::get('contact',
-                        'front_only'));
+                'front_only'));
 
         $contact_info->setPhysicalAddress(ContactInfo\PhysicalAddress::load());
         //$contact_info->setMap(Factory\ContactInfo\Map::load());
@@ -89,7 +88,7 @@ EOF;
     }
 
     private static function getValues(\contact\Resource\ContactInfo $contact_info,
-            $sort_social = false)
+        $sort_social = false)
     {
         $values['phone_number'] = $contact_info->getPhoneNumber();
         $values['fax_number'] = $contact_info->getFaxNumber();
@@ -105,7 +104,7 @@ EOF;
         $values['other_information'] = $contact_info->getOtherInformation();
         $values['accessToken'] = \phpws2\Settings::get('contact', 'accessToken');
         $values['thumbnail_map'] = \phpws2\Settings::get('contact',
-                        'thumbnail_map');
+                'thumbnail_map');
         $values['zoom'] = \phpws2\Settings::get('contact', 'zoom');
         $x = \phpws2\Settings::get('contact', 'dimension_x');
         $y = \phpws2\Settings::get('contact', 'dimension_y');
@@ -117,7 +116,7 @@ EOF;
         $values['latitude'] = $lat;
         $values['longitude'] = $long;
         $values['openmap_link'] = ContactInfo\Map::getOpenStreetMapUrl($lat,
-                        $long);
+                $long);
         $values['google_link'] = ContactInfo\Map::getGoogleMapUrl($lat, $long);
         $values['linkSupport'] = \phpws2\Settings::get('contact', 'linkSupport');
 
@@ -125,7 +124,7 @@ EOF;
         $map = $contact_info->getMap();
 
         $values = array_merge($values,
-                ContactInfo\PhysicalAddress::getValues($physical_address));
+            ContactInfo\PhysicalAddress::getValues($physical_address));
         //$values = array_merge($values, ContactInfo\Map::getValues($map));
 
         if ($sort_social) {
@@ -140,13 +139,13 @@ EOF;
             }
         } else {
             $values = array_merge($values,
-                    array('social' => ContactInfo\Social::getLinks()));
+                array('social' => ContactInfo\Social::getLinks()));
         }
         return $values;
     }
 
     public static function post(\contact\Resource\ContactInfo $contact_info,
-            $values)
+        $values)
     {
         $contact_info->setPhoneNumber($values['phone_number']);
         $contact_info->setFaxNumber($values['fax_number']);
@@ -166,18 +165,18 @@ EOF;
     private static function save(\contact\Resource\ContactInfo $contact_info)
     {
         \phpws2\Settings::set('contact', 'phone_number',
-                $contact_info->getPhoneNumber());
+            $contact_info->getPhoneNumber());
         \phpws2\Settings::set('contact', 'fax_number',
-                $contact_info->getFaxNumber());
+            $contact_info->getFaxNumber());
         \phpws2\Settings::set('contact', 'email', $contact_info->getEmail());
         \phpws2\Settings::set('contact', 'site_contact_name',
-                $contact_info->getSiteContactName());
+            $contact_info->getSiteContactName());
         \phpws2\Settings::set('contact', 'site_contact_email',
-                $contact_info->getSiteContactEmail());
+            $contact_info->getSiteContactEmail());
         \phpws2\Settings::set('contact', 'other_information',
-                $contact_info->getOtherInformation());
+            $contact_info->getOtherInformation());
         \phpws2\Settings::set('contact', 'front_only',
-                $contact_info->getFrontOnly());
+            $contact_info->getFrontOnly());
     }
 
     public static function showSiteContact()
@@ -200,13 +199,14 @@ EOF;
         \Layout::add($content, 'contact', 'SITE_CONTACT');
     }
 
-    public static function display()
+    public static function display($center = true)
     {
         $contact_info = self::load();
         $values = self::getValues($contact_info, true);
         if (!self::dataToDisplay($values)) {
             return;
         }
+        $values['center'] = $center;
 
         $template = new \phpws2\Template($values);
         $template->setModuleTemplate('contact', 'view.html');
@@ -217,27 +217,27 @@ EOF;
     private static function dataToDisplay($values)
     {
         return !empty($values['phone_number']) ||
-                !empty($values['fax_number']) ||
-                !empty($values['email']) ||
-                !empty($values['other_information']) ||
-                !empty($values['thumbnail_map']) ||
-                !empty($values['building']) ||
-                !empty($values['street']) ||
-                !empty($values['post_box']);
+            !empty($values['fax_number']) ||
+            !empty($values['email']) ||
+            !empty($values['other_information']) ||
+            !empty($values['thumbnail_map']) ||
+            !empty($values['building']) ||
+            !empty($values['street']) ||
+            !empty($values['post_box']);
     }
 
     private static function testCaptcha(\Canopy\Request $request)
     {
         $curl = curl_init();
         curl_setopt_array($curl,
-                array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'https://www.google.com/recaptcha/api/siteverify',
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => array(
-                'secret' => RECAPTCHA_PRIVATE_KEY,
-                'response' => $request->pullPostString('captchaKey')
-            )
+            array(
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => 'https://www.google.com/recaptcha/api/siteverify',
+                CURLOPT_POST => 1,
+                CURLOPT_POSTFIELDS => array(
+                    'secret' => CONTACT_GOOGLE_RECAPTCHA_KEY_PRIVATE,
+                    'response' => $request->pullPostString('captchaKey')
+                )
         ));
 
         $resp = curl_exec($curl);
@@ -281,12 +281,19 @@ EOF;
     }
 
     private static function sendEmail($toAddress, $name, $email, $subject,
-            $content)
+        $content)
     {
         $siteTitle = \Layout::getPageTitle(true);
         $subject = "From $siteTitle website: $subject";
-        $transport = new \Swift_SendmailTransport(SWIFT_MAIL_TRANSPORT_PARAMETER);
-        $message = \Swift_Message::newInstance();
+
+        if (CONTACT_SWIFT_OLD_VERSION) {
+            $transport = \Swift_SendmailTransport::newInstance(SWIFT_MAIL_TRANSPORT_PARAMETER);
+            $message = \Swift_Message::newInstance();
+        } else {
+            $transport = new \Swift_SendmailTransport(SWIFT_MAIL_TRANSPORT_PARAMETER);
+            $message = new \Swift_Message;
+        }
+
         $message->setSubject($subject);
         $message->setFrom([$email => $name]);
         $message->setTo($toAddress);
