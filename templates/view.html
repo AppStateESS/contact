@@ -11,7 +11,7 @@
     <?=(!empty($street)) ? "<div>$street</div>" : null?>
     <?=(!empty($city) && !empty($state) && !empty($zip)) ? "<div>$city, $state $zip</div>":null?>
   </div>
-  <div class="contact-social-icons">
+  <div class="contact-social-icons" <?=$center ? '':'style="text-align: left !important;"'?>>
     <?php if (!empty($social)): foreach($social as $label=>$link): extract($link);?>
     <a href="<?=$prefix,$url?>" target="_blank"><i class="fa-2x <?=$icon?>" title="<?=$title?>"></i></a>
     <?php endforeach;endif;?>
@@ -29,8 +29,11 @@
   </div>
   <?php if ($thumbnail_map):?>
   <div>
-    <div><a href="<?=$openmap_link?>" target="_blank"><img src="<?=$thumbnail_map?>" class="img-fluid"/></a></div>
-    <div class="text-center"><small><a href="<?=$openmap_link?>" target="_blank">OpenStreetMap</a> | <a href="<?=$google_link?>" target="_blank">Google</a></small></div>
+    <div><a title="OpenStreetMap view" href="<?=$openmap_link?>" target="_blank"><img src="<?=$thumbnail_map?>"
+          class="img-fluid" alt="Map thumbnail of office location" /></a></div>
+    <div class="text-center"><small><a title="OpenStreetMap view" href="<?=$openmap_link?>"
+          target="_blank">OpenStreetMap</a> | <a title="Google Map view" href="<?=$google_link?>"
+          target="_blank">Google</a></small></div>
   </div>
   <?php endif;?>
 </div>
