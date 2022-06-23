@@ -3,11 +3,11 @@
 
 const emailForm = () => {
   let timeOut
-  
-  $('.contact-offsite-email').click(()=>{
+
+  $('.contact-offsite-email').click(() => {
     $('#email-contact-modal').modal('hide')
   })
-  
+
   const resetForm = () => {
     $('#email-contact-form').show()
     $('#contact-name').val('')
@@ -20,14 +20,14 @@ const emailForm = () => {
     grecaptcha.reset()
     clearTimeout(timeOut)
   }
-  
+
   const delayedClose = () => {
     timeOut = setTimeout(() => {
       $('#email-contact-modal').modal('hide')
       resetForm()
     }, 5000)
   }
-  
+
   let emailAddress
 
   $('a[href^="mailto"]').click((e) => {
@@ -47,7 +47,9 @@ const emailForm = () => {
         }
       })
     }
-    const offsiteSubject = `From ${siteTitle} website${subject.length > 0 ? ':' + subject : ''}`
+    const offsiteSubject = `From ${siteTitle} website${
+      subject.length > 0 ? ':' + subject : ''
+    }`
     const googleEmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${emailAddress}&su=${offsiteSubject}`
     const outlookEmail = `https://outlook.live.com/owa/#subject=${offsiteSubject}&to=${emailAddress}&path=%2fmail%2faction%2fcompose`
     const yahooEmail = `http://compose.mail.yahoo.com/?to=${emailAddress}&subj=${offsiteSubject}`
@@ -60,7 +62,7 @@ const emailForm = () => {
     $('#local-email-link').attr('href', `mailto:${emailUri}`)
     $('#contact-subject').val(decodeURI(subject))
   })
-  
+
   $('#send-message').click(() => {
     $('#send-message').hide()
     $('#contact-sending').show()
@@ -68,8 +70,13 @@ const emailForm = () => {
     const email = $('#contact-email').val()
     const subject = $('#contact-subject').val()
     const message = $('#contact-message').val()
-    
-    if (name.length == 0 || email.length == 0 || subject.length == 0 || message.length == 0) {
+
+    if (
+      name.length == 0 ||
+      email.length == 0 ||
+      subject.length == 0 ||
+      message.length == 0
+    ) {
       $('#send-message').show()
       $('#contact-sending').hide()
       $('#contact-form-error').show().text('Please complete all fields below.')
@@ -83,8 +90,8 @@ const emailForm = () => {
         email,
         subject,
         message,
-        'toAddress': emailAddress,
-        captchaKey
+        toAddress: emailAddress,
+        captchaKey,
       },
       dataType: 'json',
       type: 'post',
@@ -95,21 +102,24 @@ const emailForm = () => {
           $('#email-contact-form').hide()
           delayedClose()
         } else {
+          $('#send-message').show()
           $('#contact-form-error').show().text(data.message)
         }
       },
       error: () => {
         $('#contact-form-success').hide()
         $('#email-contact-form').hide()
-        $('#contact-form-error').show().html('Sorry, an unrecoverable error occurred.')
+        $('#contact-form-error')
+          .show()
+          .html('Sorry, an unrecoverable error occurred.')
         delayedClose()
       },
       complete: () => {
         $('#contact-sending').hide()
-      }
+      },
     })
   })
-  
+
   $('#email-contact-modal').on('hidden.bs.modal', () => {
     resetForm()
   })
