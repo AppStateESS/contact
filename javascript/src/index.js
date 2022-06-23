@@ -1,5 +1,8 @@
+'use strict'
 import React from 'react'
-import ReactDOM from 'react-dom'
+import {createRoot} from 'react-dom/client'
 import ContactForm from './ContactForm.jsx'
 
-ReactDOM.render(<ContactForm settings={settings}/>, document.getElementById('contact-form'))
+const container = document.getElementById('contact-form')
+const root = createRoot(container)
+root.render(<ContactForm settings={settings} />)
