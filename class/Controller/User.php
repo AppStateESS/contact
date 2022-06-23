@@ -29,7 +29,8 @@ use contact\Resource;
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
  */
-require_once PHPWS_SOURCE_DIR . 'javascript/captcha/recaptcha/recaptcha_settings.php';
+
+namespace contact\Controller;
 
 class User extends \phpws2\Http\Controller
 {
@@ -44,7 +45,7 @@ class User extends \phpws2\Http\Controller
 
     protected function getHtmlView($data, \Canopy\Request $request)
     {
-        $content = Factory::display();
+        $content = \contact\Factory\ContactInfo::display(false);
         if (empty($content)) {
             $content = 'No contact information found';
         }
@@ -54,7 +55,7 @@ class User extends \phpws2\Http\Controller
 
     public function post(\Canopy\Request $request)
     {
-        $result = Factory::postEmail($request);
+        $result = \contact\Factory\ContactInfo::postEmail($request);
         $view = new \phpws2\View\JsonView($result);
         $response = new \Canopy\Response($view);
         return $response;
