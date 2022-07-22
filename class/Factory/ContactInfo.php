@@ -50,8 +50,8 @@ EOF;
             $script = PHPWS_SOURCE_HTTP . 'mod/contact/javascript/dev/email.js';
         }
         self::addEmailModal();
-        \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>");
-        \Layout::addJSHeader("<script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>");
+        \Layout::addJSHeader("<script type='text/javascript' src='$script'></script>", 'contact-email-script');
+        \Layout::addJSHeader("<script src=\"https://www.google.com/recaptcha/api.js\" async defer></script>", 'google-recaptcha');
     }
 
     private static function addEmailModal()
