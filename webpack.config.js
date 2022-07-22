@@ -1,8 +1,9 @@
 /* globals __dirname, module */
-const webpack = require('webpack')
-const path = require('path')
+import webpack from 'webpack'
+import path from 'path'
+import BrowserSyncPlugin from 'browser-sync-webpack-plugin'
 
-module.exports = (env, argv) => {
+module.exports = (_env, argv) => {
   const inProduction = argv.mode === 'production'
   const inDevelopment = argv.mode === 'development'
   const settings = {
@@ -63,7 +64,6 @@ module.exports = (env, argv) => {
   }
 
   if (inDevelopment) {
-    const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
     settings.plugins.push(
       new BrowserSyncPlugin({
         host: 'localhost',
@@ -78,10 +78,6 @@ module.exports = (env, argv) => {
   }
 
   if (inProduction) {
-    // const BundleAnalyzerPlugin =
-    // require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-    // settings.plugins.push(new BundleAnalyzerPlugin())
-
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
     })
