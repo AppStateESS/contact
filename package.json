@@ -30,7 +30,7 @@
     "@essappstate/canopy-react-navs": "^0.2.4",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "babel-loader": "^8.2.5",
-    "browser-sync": "^2.27.10",
+    "browser-sync": "^2.27.11",
     "browser-sync-webpack-plugin": "^2.3.0",
     "css-loader": "^6.7.1",
     "es6-promise": "^4.2.8",
